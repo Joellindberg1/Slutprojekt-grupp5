@@ -9,7 +9,6 @@ const monsterObject = {
     Number of eyes: ; // Behöver hämtas från formuläret
     Number of arms: ; // Behöver hämtas från formuläret
     Number of horns: ; // Behöver hämtas från formuläret
-
     colorMap: {
         color1: monsterColors[0],
         color2: monsterColors[1],
