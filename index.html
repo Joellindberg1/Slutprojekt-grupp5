@@ -4,55 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="app.js"></script>
+    <script src="app.js" defer></script>
     <title>Document</title>
 </head>
 <body>
     <div id="container">
-         <header>
+        <header>
         </header>
         <main>
-     <section id="monster-container">
-    <article class="monster"></article>
-    <article class="monster"></article>
-    <article class="monster"></article>
-    <article class="monster"></article>
-    <article class="monster"></article>
-    <article class="monster"></article>
-    <article class="monster"></article>
-     <button id="form-button">
-     <form action="" method="post">
-    <label for="monsterColors">
-     <p>Name</p>
-     <input type="text" name="name" id="name">
-     <p>monsterColors</p>
-    <select name="monster.Colours" id="monster-Colors"></select>
-    </label>
-    <label for="monster-Types">
-     <p>monsterTypes</p>
-    <select name="monster-types" id="monster-Types"></select>
-    </label>
-     </form>
-     <form action="" method="get">
-      <p>Eyes</p>
-    <input type="number" name="eyes" value="0" main="0">
-     <p>Arms</p>
-    <input type="number" name="arms" value="0" main="0">
-    <p>tentacles</p>
-   <input type="number" name="tentacles" value="0" main="0">
-     <p>Horn</p>
-     <input type="number" name="horn" value="0" main="0">
-                    </label>
+            <section id="monster-container">
+                <article class="monster" name="">
+                    <p>
+                    <table>
+                        <caption>
+                            <h3>
+                                Monstrets namn
+                            </h3>
+                        </caption>
+                        <tr>
+                            <th scope="row">Monster type: </th>
+                            <td>Monstrets typ</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Color: </th>
+                            <td>Monstrets färg</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Number of eyes: </th>
+                            <td>Antal ögon</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Number of arms: </th>
+                            <td>Antal armar</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Number of horns: </th>
+                            <td>Antal horn</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Number of tentacles: </th>
+                            <td>Antal tentaklar</td>
+                        </tr>
+                    </table>
+                    </p>
+                    <a href='https://postimg.cc/3490hyqy' target='_blank'><img src='https://i.postimg.cc/3490hyqy/monster.png'
+                            border='0' alt='monster' /></a>
+                </article>
+                <article class="monster"></article>
+                <article class="monster"></article>
+                <article class="monster"></article>
+                <article class="monster"></article>
+                <article class="monster"></article>
+                <article class="monster"></article>
+                <button id="form-button">
+                    <form action="" method="post">
+                        <label for="monsterColors">
+                            <p>Name</p>
+                            <input type="text" name="name" id="name" />
+                            <p>monsterColors</p>
+                            <select name="monster.Colours" id="monster-Colors"></select>
+                            </label>
+                            <label for="monster-Types">
+                                <p>monsterTypes</p>
+                                <select name="monster-types" id="monster-Types"></select>
+                            </label>
+                            </form>
+                            <form action="" method="get">
+                                <p>Eyes</p>
+                        <input type="number" name="eyes" value="0" main="0" />
+                        <p>Arms</p>
+                        <input type="number" name="arms" value="0" main="0" />
+                        <p>Tentacles</p>
+                        <input type="number" name="tentacles" value="0" main="0" />
+                        <p>Horns</p>
+                        <input type="number" name="horn" value="0" main="0" />
                     </form>
                 </button>
             </section>
         </main>
         <aside>
             <table>
-                <caption>Monster-statistik</caption>
+                <caption>
+                    Monster-statistik
+                </caption>
             </table>
         </aside>
-        <footer></footer>
+        <footer>
+        </footer>
         </div>
 </body>
 </html>
