@@ -2,13 +2,13 @@
 
 const monsterObject = {
 
-    Name: ;// Behöver hämtas från formuläret
+    Name: Lorem Ipsum ;// Behöver hämtas från formuläret
     Type: monsterTypes;
     Color: monsterColors;
-    Number of tentacles: ; // Behöver hämtas från formuläret
-    Number of eyes: ; // Behöver hämtas från formuläret
-    Number of arms: ; // Behöver hämtas från formuläret
-    Number of horns: ; // Behöver hämtas från formuläret
+    Number of tentacles: 4; // Behöver hämtas från formuläret
+    Number of eyes: 1; // Behöver hämtas från formuläret
+    Number of arms: 2; // Behöver hämtas från formuläret
+    Number of horns: 2; // Behöver hämtas från formuläret
     colorMap: {
         color1: monsterColors[0],
         color2: monsterColors[1],
@@ -40,3 +40,6 @@ const monsterObject = {
 //         break;
 // }
 
+
+const monsterColors = ["Blue", "Green", "Red", "Brown", "Purple"];
+const monsterTypes = ["Firemonster", "Skymonster", "Watermonster"];
