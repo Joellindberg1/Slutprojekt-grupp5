@@ -126,6 +126,34 @@ const renderMonsterCard = () => {
 };
 
 
+// ========LÄGGER IN ARRAYS I FORMULÄR========
+// Funktion som skapar dynamiska monsterkort.
+// ===========================================
+window.addEventListener("load", (event) => {
+    i = 0;
+    for (const element of monsterColors) {
+        const colors = document.getElementById("monster-Colors");
+        colors.value = i;
+        colors.innerHtml = monsterColors[i]
+        i++;
+        const option = document.createElement("option");
+        option.text = element;
+        colors.add(option);
+    }
+
+    i = 0;
+    for (const element of monsterTypes) {
+        const types = document.getElementById("monster-Types");
+        types.value = i;
+        types.innerHtml = monsterTypes[i]
+        i++;
+        const option = document.createElement("option");
+        option.text = element;
+        types.add(option);
+    }
+});
+
+
 // ==============APP STARTAR HÄR==============
 
 // Arrays som lagrar möjliga färger och typer för monster

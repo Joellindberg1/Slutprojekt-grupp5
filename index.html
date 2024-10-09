@@ -13,32 +13,25 @@
     <div id="container">
         <header>
         </header>
+        <form action="" method="post">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+            <label for="monsterColors">monsterColors</label>
+            <select name="monster.Colours" id="monster-Colors"></select>
+            <label for="monster-Types">monsterTypes</label>
+            <select name="monster-types" id="monster-Types"></select>
+            <label for="eyes">Eyes</label>
+            <input type="number" name="eyes" value="0" main="0" />
+            <label for="arms">Arms</label>
+            <input type="number" name="arms" value="0" main="0" />
+            <label for="tentacles">Tentacles</label>
+            <input type="number" name="tentacles" value="0" main="0" />
+            <label for="Horns">Horns</label>
+            <input type="number" name="horn" value="0" main="0" />
+            <button type="button" id="form-button">Add monster</button>
+            </form>
         <main>
             <section class="collection"></section>
-            <button id="form-button">
-                <form action="" method="post">
-                    <label for="monsterColors">
-                        <p>Name</p>
-                        <input type="text" name="name" id="name" />
-                        <p>monsterColors</p>
-                        <select name="monster.Colours" id="monster-Colors"></select>
-                    </label>
-                    <label for="monster-Types">
-                        <p>monsterTypes</p>
-                        <select name="monster-types" id="monster-Types"></select>
-                    </label>
-                </form>
-                <form action="" method="get">
-                    <p>Eyes</p>
-                    <input type="number" name="eyes" value="0" main="0" />
-                    <p>Arms</p>
-                    <input type="number" name="arms" value="0" main="0" />
-                    <p>Tentacles</p>
-                    <input type="number" name="tentacles" value="0" main="0" />
-                    <p>Horns</p>
-                    <input type="number" name="horn" value="0" main="0" />
-                </form>
-            </button>
         </main>
         <aside class="database">
             <table>
