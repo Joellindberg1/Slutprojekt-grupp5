@@ -1,38 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="app.js"></script>
-    <title>Document</title>
+    <title>Monster Database</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="app.js" defer></script>
 </head>
+
 <body>
     <div id="container">
-
         <header>
-        
         </header>
         <main>
-            <section id="monster-container">
-                <article class="monster"></article>
-                <article class="monster"></article>
-                <article class="monster"></article>
-                <article class="monster"></article>
-                <article class="monster"></article>
-                <article class="monster"></article>
-                <article class="monster"></article>
-                <button id="form-button">
-                    <form action="" method="post"></form>
-                </button>
-            </section>
+            <section class="collection"></section>
+            <aside class="form-container">
+
+                <form method="post">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" />
+                    <label for="monster-Colors">Monster Colors</label>
+                    <select name="monster.Colours" id="monster-Colors"></select>
+                    <label for="monster-Types">Monster Types</label>
+                    <select name="monster-types" id="monster-Types"></select>
+                    <label for="eyes">Eyes</label>
+                    <input type="number" name="eyes" value="0" main="0" />
+                    <label for="arms">Arms</label>
+                    <input type="number" name="arms" value="0" main="0" />
+                    <label for="tentacles">Tentacles</label>
+                    <input type="number" name="tentacles" value="0" main="0" />
+                    <label for="">Horns</label>
+                    <input type="number" name="horn" value="0" main="0" />
+                    <button type="button" id="form-button">Add </button>
+                </form>
+
+            </aside>
         </main>
-        <aside>
+        <aside class="database">
             <table>
-                <caption>Monster-statistik</caption>
+                <caption>
+                    Monster-statistik
+                </caption>
             </table>
         </aside>
-        <footer></footer>
-        </div>
+        <footer>
+        </footer>
+    </div>
 </body>
+
 </html>
