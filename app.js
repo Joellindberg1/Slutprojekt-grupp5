@@ -1,7 +1,23 @@
 // ==================OBJEKT==================
 
 // const monsterObject = {
+// const monsterObject = {
 
+//     Name: Lorem Ipsum ;// Behöver hämtas från formuläret
+//     Type: monsterTypes;
+//     Color: monsterColors;
+//     Number of tentacles: 4; // Behöver hämtas från formuläret
+//     Number of eyes: 1; // Behöver hämtas från formuläret
+//     Number of arms: 2; // Behöver hämtas från formuläret
+//     Number of horns: 2; // Behöver hämtas från formuläret
+//     colorMap: {
+//         color1: monsterColors[0],
+//         color2: monsterColors[1],
+//         color3: monsterColors[2],
+//         color4: monsterColors[3],
+//         color5: monsterColors[4]
+//     }
+// }
 //     Name: Lorem Ipsum ;// Behöver hämtas från formuläret
 //     Type: monsterTypes;
 //     Color: monsterColors;
