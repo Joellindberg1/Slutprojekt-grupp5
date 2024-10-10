@@ -43,3 +43,5 @@ const monsterObject = {
 
 const monsterColors = ["Blue", "Green", "Red", "Brown", "Purple"];
 const monsterTypes = ["Firemonster", "Skymonster", "Watermonster"];
+
+
