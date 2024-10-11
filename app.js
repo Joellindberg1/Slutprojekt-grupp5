@@ -62,14 +62,17 @@
 // Funktion som skapar dynamiska monsterkort.
 // ===========================================
 
-const renderMonsterCard = () => {
-
+const renderMonsterCard = (filterColor = null, filterType = null) => {
     // Tömmer section class="collection"
     const monsterArticle = document.querySelector(".collection");
     monsterArticle.innerHTML = "";
 
     // loopar igenom state för att skapa monster-kort av innehållet
     for (const m of state.collection) {
+        // Filtrera monsterkort baserat på färg och typ
+        if ((filterColor && m.color !== filterColor) || (filterType && m.type !== filterType)) {
+            continue; // Hoppa över detta monster om det inte matchar filtreringen
+        }
 
         // Skapar ny article-tag
         const monster = document.createElement("article");
@@ -118,10 +121,8 @@ const renderMonsterCard = () => {
         // Lägger till redigeringsknappen i monster-containern
         monster.appendChild(editButton);
 
-
         //Lägger till monster-containern i DOM
         monsterArticle.appendChild(monster);
-
     }
 };
 
@@ -130,11 +131,11 @@ const renderMonsterCard = () => {
 // Funktion som skapar dynamiska monsterkort.
 // ===========================================
 window.addEventListener("load", (event) => {
-    i = 0;
+    let i = 0;
     for (const element of monsterColors) {
         const colors = document.getElementById("monster-Colors");
         colors.value = i;
-        colors.innerHtml = monsterColors[i]
+        colors.innerHTML = monsterColors[i];
         i++;
         const option = document.createElement("option");
         option.text = element;
@@ -145,7 +146,7 @@ window.addEventListener("load", (event) => {
     for (const element of monsterTypes) {
         const types = document.getElementById("monster-Types");
         types.value = i;
-        types.innerHtml = monsterTypes[i]
+        types.innerHTML = monsterTypes[i];
         i++;
         const option = document.createElement("option");
         option.text = element;
@@ -162,10 +163,9 @@ const monsterTypes = ["Firemonster", "Skymonster", "Watermonster"];
 
 // State innehåller datan från användarens input samt standardvärdena för appen
 const state = {
-
     collection: [
         { name: "Grimblot", type: monsterTypes[1], color: monsterColors[1], eyes: 1, arms: 2, horns: 2, tentacles: 0 },
-        { name: "Zarok the Devourer", type: monsterTypes[0], color: monsterColors[0], eyes: 2, arms: 0, horns: 1, tentacles: 4 },
+        { name: "Zarok the Devourer", type: monsterTypes[0], color: monsterColors[1], eyes: 2, arms: 0, horns: 1, tentacles: 4 },
         { name: "Blisterfang", type: monsterTypes[1], color: monsterColors[1], eyes: 3, arms: 4, horns: 0, tentacles: 1 },
         { name: "Thraxxis", type: monsterTypes[2], color: monsterColors[2], eyes: 5, arms: 8, horns: 1, tentacles: 0 },
         { name: "Murkspawn", type: monsterTypes[0], color: monsterColors[3], eyes: 2, arms: 2, horns: 0, tentacles: 6 },
@@ -178,14 +178,116 @@ const state = {
 };
 
 state.addMonster("Test", monsterTypes[1], monsterColors[2], 2, 3, 4, 5);
-renderMonsterCard();
+renderMonsterCard(); // Rendera alla monster kort från början
 
 
-document.querySelector(".edit-button").addEventListener("click", (e) => {
-    e.preventDefault();
-    // Anropa funktion som ersätter monsterkortets innehåll med ett formulär för att redigera monstrets attribut. Nuvarande data ska behållas i inputrutorna. (OBS! Jag har inte börjat bygga funktionen ännu)
+// Skapa arrays för räkning av färger och typer av monster
+const colorCount = new Array(monsterColors.length).fill(0);  // Initierar med 0
+const typeCount = new Array(monsterTypes.length).fill(0);    // Initierar med 0
 
+// Loopa igenom collection-arrayen för att räkna färger och typer
+state.collection.forEach(monster => {
+    // Tar reda på index i arryen monsterColor och type för att matcha räknaren och arryen med färger och typer. 
+    const colorIndex = monsterColors.indexOf(monster.color);
+    const typeIndex = monsterTypes.indexOf(monster.type);
+    
+    // Om index inte är -1, plussa på en. Detta för färg. 
+    if (colorIndex !== -1) {
+        colorCount[colorIndex]++;
+    }
+    
+    // Om index inte är -1, plussa på en. Detta för typ. 
+    if (typeIndex !== -1) {
+        typeCount[typeIndex]++;
+    }
 });
 
-// Lägg till funktion här som tar information från formuläret och lägger in som ett monster-objekt i state.collection
+// Kollar DOM trädet. 
+const filterContainerColor = document.querySelector(".filters-color");
+const filterContainerType = document.querySelector(".filters-monster");
+
+// Skapa knappar för varje färg och inkludera räkningen från colorCount igenom att hålla reda på index. 
+// Skapa en variabel för reset-knappen utanför looparna (om du inte har gjort det redan)
+let resetButton;
+const resetFilter = document.querySelector(".filters-monster");
+// Skapa filterknappar för monsterfärger
+monsterColors.forEach((color, index) => {
+    const filterButtonColor = document.createElement("button");
+    const countColor = colorCount[index]; // Använd indexet från forEach
+    filterButtonColor.className = "filter-button";
+    filterButtonColor.type = "button";
+    
+    // Text på knappen visar färgen och räkningen i ()
+    filterButtonColor.innerHTML = color + " (" + countColor + ")";
+    filterButtonColor.setAttribute("data-color", color);
+    
+    // Lägg till knappen i DOM:en som child till ".filters-color". 
+    filterContainerColor.appendChild(filterButtonColor);
+
+    // Event listener för filtrering
+    filterButtonColor.addEventListener("click", () => {
+        renderMonsterCard(color); // Filtrera baserat på färg
+
+        // Kontrollera om reset-knappen redan finns
+        if (!resetButton) {
+            // Skapa en reset-knapp för att visa alla monsterkort
+            resetButton = document.createElement("button");
+            resetButton.className = "reset-filter"; // Ge knappen en klass
+            resetButton.innerText = "Reset Filter";
+            
+            // Lägg till reset-knappen i DOM
+            resetFilter.appendChild(resetButton); // Använd rätt förälder här
+
+            // Event listener för reset-knappen
+            resetButton.addEventListener("click", () => {
+                renderMonsterCard(); // Visa alla monster igen
+                resetButton.remove(); // Ta bort knappen efter att den har tryckts
+                resetButton = null; // Återställ resetButton till null
+            });
+        }
+    });
+});
+
+
+// Skapa knappar för varje monster typ och inkludera räkningen från typeCount igenom att hålla reda på index. 
+// let resetButton;
+
+
+monsterTypes.forEach((type, index) => {
+    const filterButtonType = document.createElement("button");
+    const countType = typeCount[index]; // Använd indexet från forEach
+    filterButtonType.className = "filter-button";
+    filterButtonType.type = "button";
+    
+    // Text på knappen visar typen och räkningen i ()
+    filterButtonType.innerHTML = type + " (" + countType + ")";
+    filterButtonType.setAttribute("data-type", type);
+    
+    // Lägg till knappen i DOM:en som child till ".filters-monster". 
+    filterContainerType.appendChild(filterButtonType);
+
+    // Event listener för filtrering
+    filterButtonType.addEventListener("click", () => {
+        renderMonsterCard(null, type); // Filtrera baserat på typ
+
+        // Kontrollera om reset-knappen redan finns
+        if (!resetButton) {
+            // Skapa en reset-knapp för att visa alla monsterkort
+            resetButton = document.createElement("button");
+            resetButton.className = "reset-filter"; // Ge knappen en klass
+            resetButton.innerText = "Reset Filter";
+            
+            // Lägg till reset-knappen i DOM
+            resetFilter.appendChild(resetButton);
+
+            // Event listener för reset-knappen
+            resetButton.addEventListener("click", () => {
+                renderMonsterCard(); // Visa alla monster igen
+                resetButton.remove(); // Ta bort knappen efter att den har tryckts
+                resetButton = null; // Återställ resetButton till null
+            });
+        }
+    });
+});
+
 
