@@ -65,7 +65,7 @@ aside {
 
 /* Vad som händer med "asiden" när man hovrar över. */
 aside:hover {
-    max-width: 300px; /* Ställ in önskad bredd när hover */
+    max-width: 350px; /* Ställ in önskad bredd när hover */
 }
 
 /* Ändrar om texten "monster-Statistik" så att den är vertikal istället för horisontell. */
@@ -105,7 +105,7 @@ aside:hover .filter-container {
 }
 
 
-.filters {
+.filters-color, .filters-monster, .reset-filter {
     display: grid; /* Använd grid för filtreringsknapparna */
     grid-template-columns: repeat(3, 1fr); /* Tre kolumner för knapparna */
     gap: 10px; /* Avstånd mellan knapparna */
