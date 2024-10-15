@@ -13,189 +13,218 @@
 #EDF5FC Alice blue
 */
 * {
-    padding: 0;
-    border: 0;
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #272D2D;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #272d2d;
 }
 
 html,
 body {
-    background-color: #EDF5FC;
-    background-color: #EDF5FC;
-    width: 100vw;
-    height: 100vh;
+  background-color: #edf5fc;
+  background-color: #edf5fc;
+  width: 100vw;
+  height: 100vh;
 }
 
 #container {
-    display: grid;
-    min-height: 100%;
-    grid-template-rows: auto 1fr auto;
-    grid-template-columns: 1fr 4fr auto; /*KOlla på höger aside*/
-    grid-template-areas:
-        "topbar topbar topbar"
-        "left content database"
-        "footer footer footer";
+  display: grid;
+  min-height: 100%;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr 4fr auto; /*KOlla på höger aside*/
+  grid-template-areas:
+    "topbar topbar topbar"
+    "left content database"
+    "footer footer footer";
 }
 
 header {
-    background: linear-gradient(170deg, rgba(63, 43, 109, 1) 0%, rgba(116, 79, 198, 1) 35%, rgba(155, 114, 246, 1) 100%);
-    height: 10vh;
-    grid-area: topbar;
+  background: linear-gradient(
+    170deg,
+    rgba(63, 43, 109, 1) 0%,
+    rgba(116, 79, 198, 1) 35%,
+    rgba(155, 114, 246, 1) 100%
+  );
+  height: 10vh;
+  grid-area: topbar;
 }
-
-
 
 /* Sido-menyn för filter/datan
 Här är en hover animation som får rutan att växa ut när man hovrar över asiden
 När man inte hovrar så syns ingen information. När man hovrar så kommer information upp. */
 aside {
-    /* background-color: #B8C5D6; */
-    grid-area: database;
-    background: linear-gradient(140deg, rgba(137, 130, 141, 1) 0%, rgba(163, 155, 168, 1) 35%, rgba(208, 197, 215, 1) 100%);
-    padding: 10px;
-    border-radius: 10px; /* Rundade kanter för aside */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Skugga för att ge djup */
-    width: 100%; /* Full bredd inom sin kolumn */
-    max-width: 50px; /* Maximal bredd för aside */
-    transition: max-width 1.5s ease; /* Övergång för bredd */
-    margin-left: auto;
+  /* background-color: #B8C5D6; */
+  grid-area: database;
+  background: linear-gradient(
+    140deg,
+    rgba(137, 130, 141, 1) 0%,
+    rgba(163, 155, 168, 1) 35%,
+    rgba(208, 197, 215, 1) 100%
+  );
+  padding: 10px;
+  border-radius: 10px; /* Rundade kanter för aside */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Skugga för att ge djup */
+  width: 100%; /* Full bredd inom sin kolumn */
+  max-width: 50px; /* Maximal bredd för aside */
+  transition: max-width 1.5s ease; /* Övergång för bredd */
+  margin-left: auto;
 }
 
 /* Vad som händer med "asiden" när man hovrar över. */
 aside:hover {
-    max-width: 300px; /* Ställ in önskad bredd när hover */
+  max-width: 300px; /* Ställ in önskad bredd när hover */
 }
 
 /* Ändrar om texten "monster-Statistik" så att den är vertikal istället för horisontell. */
 aside caption {
-    writing-mode: vertical-rl; /* Gör texten vertikal */
-    /* transform: rotate(180deg); Rotera texten för att vara rättvänd */
-    font-weight: bold; /* Fetstil */
-    margin-bottom: 20px; /* Avstånd under rubriken */
-    transition: writing-mode 0.3s ease, transform 0.3s ease; /* Mjuk övergång för stiländringar */
+  writing-mode: vertical-rl; /* Gör texten vertikal */
+  /* transform: rotate(180deg); Rotera texten för att vara rättvänd */
+  font-weight: bold; /* Fetstil */
+  margin-bottom: 20px; /* Avstånd under rubriken */
+  transition: writing-mode 0.3s ease, transform 0.3s ease; /* Mjuk övergång för stiländringar */
 }
 
 /* Vid hover så visas "monster-statistik" horisontellt igen. */
 aside:hover caption {
-    writing-mode: horizontal-tb; /* Gör texten horisontell vid hover */
-    /* transform: rotate(0deg); Ingen rotation vid hover */
-    font-weight: bold; /* Fet stil */
-    text-align: center; /* Centrera texten */
-    margin-bottom: 10px; /* Avstånd under caption */
+  writing-mode: horizontal-tb; /* Gör texten horisontell vid hover */
+  /* transform: rotate(0deg); Ingen rotation vid hover */
+  font-weight: bold; /* Fet stil */
+  text-align: center; /* Centrera texten */
+  margin-bottom: 10px; /* Avstånd under caption */
 }
 
 /* Se till att det är 3 kolumner och sedan ny rad. 
 Dölja knapparna när det inte är hover
 långsam transition */
 .filter-container {
-    display: grid; /* Använd grid för layout */
-    grid-template-columns: repeat(3, 1fr); /* Tre kolumner */
-    gap: 10px; /* Avstånd mellan kolumnerna */
-    opacity: 0; /* Dölja knapparna */
-    visibility: hidden; /* Dölja knapparna */
-    transition: opacity 1.5s ease; /* Mjuk övergång */
+  display: grid; /* Använd grid för layout */
+  grid-template-columns: repeat(3, 1fr); /* Tre kolumner */
+  gap: 10px; /* Avstånd mellan kolumnerna */
+  opacity: 0; /* Dölja knapparna */
+  visibility: hidden; /* Dölja knapparna */
+  transition: opacity 1.5s ease; /* Mjuk övergång */
 }
 
 /* Visa knapparna när det är hover */
 aside:hover .filter-container {
-    opacity: 1; /* Visa knapparna vid hover */
-    visibility: visible; /* Gör knapparna synliga */
+  opacity: 1; /* Visa knapparna vid hover */
+  visibility: visible; /* Gör knapparna synliga */
 }
 
-
 .filters {
-    display: grid; /* Använd grid för filtreringsknapparna */
-    grid-template-columns: repeat(3, 1fr); /* Tre kolumner för knapparna */
-    gap: 10px; /* Avstånd mellan knapparna */
-    margin-bottom: 20px; /* Marginal under varje filteravsnitt */
+  display: grid; /* Använd grid för filtreringsknapparna */
+  grid-template-columns: repeat(3, 1fr); /* Tre kolumner för knapparna */
+  gap: 10px; /* Avstånd mellan knapparna */
+  margin-bottom: 20px; /* Marginal under varje filteravsnitt */
 }
 
 h4 {
-    grid-column: span 3; /* Gör rubrikerna hela bredden av grid */
-    margin: 10px 0; /* Avstånd ovanför och nedanför rubrikerna */
-    text-align: center; /* Centrera texten */
+  grid-column: span 3; /* Gör rubrikerna hela bredden av grid */
+  margin: 10px 0; /* Avstånd ovanför och nedanför rubrikerna */
+  text-align: center; /* Centrera texten */
 }
 
 .filter-button {
-    background-color: white; /* Vit bakgrund för knapparna */
-    border: 2px solid rgba(116, 79, 198, 1); /* Ljusgrå kant */
-    border-radius: 20px; /* Rundade kanter */
-    padding: 10px; /* Utrymme inuti knappen */
-    font-size: 14px; /* Textstorlek */
-    cursor: pointer; /* Pekar muspekaren */
-    transition: background-color 0.3s, color 0.3s; /* Mjuk övergång */
-    flex: 1; /* Gör att knapparna kan expandera lika mycket i tillgängligt utrymme */
-    min-height: 50px; /* Minimum höjd för knapparna */
-    text-align: center; /* Centrera texten i knapparna */
+  background-color: white; /* Vit bakgrund för knapparna */
+  border: 2px solid rgba(116, 79, 198, 1); /* Ljusgrå kant */
+  border-radius: 20px; /* Rundade kanter */
+  padding: 10px; /* Utrymme inuti knappen */
+  font-size: 14px; /* Textstorlek */
+  cursor: pointer; /* Pekar muspekaren */
+  transition: background-color 0.3s, color 0.3s; /* Mjuk övergång */
+  flex: 1; /* Gör att knapparna kan expandera lika mycket i tillgängligt utrymme */
+  min-height: 50px; /* Minimum höjd för knapparna */
+  text-align: center; /* Centrera texten i knapparna */
 }
 
 /* Hover-effekt */
 .filter-button:hover {
-    background-color: #F7F7F7; /* Ljusgrå bakgrund vid hover */
+  background-color: #f7f7f7; /* Ljusgrå bakgrund vid hover */
 }
 
 .collection {
-    grid-area: content;
-    display: flex;
-    flex-flow: row wrap;
+  grid-area: content;
+  display: flex;
+  flex-flow: row wrap;
 }
 
 footer {
-    grid-area: footer;
-    background-color: brown;
-    height: 5vh;
+  grid-area: footer;
+  background-color: brown;
+  height: 5vh;
 }
 
 main {
-    background-color: #EDF5FC;
+  background-color: #edf5fc;
 }
 
 .monster {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background: linear-gradient(140deg, rgba(137, 130, 141, 1) 0%, rgba(163, 155, 168, 1) 35%, rgba(208, 197, 215, 1) 100%);
-    width: 300px;
-    height: 300px;
-    margin: 20px;
-    padding: 20px;
-    border-radius: 10px 60px 10px 60px;
-    box-shadow: rgb(124, 124, 124) 5px 5px 10px;
-    text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(
+    140deg,
+    rgba(137, 130, 141, 1) 0%,
+    rgba(163, 155, 168, 1) 35%,
+    rgba(208, 197, 215, 1) 100%
+  );
+  width: 300px;
+  height: 300px;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px 60px 10px 60px;
+  box-shadow: rgb(124, 124, 124) 5px 5px 10px;
+  text-align: left;
 }
 
 table {
-    padding: 5px;
+  padding: 5px;
 }
 
 h3 {
-    font-size: xx-large;
-    margin: 5px;
+  font-size: xx-large;
+  margin: 5px;
 }
 
 h4 {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 tr {
-    padding: 0%;
+  padding: 0%;
 }
 
 a {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    padding: 3%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 3%;
 }
 
 img {
-    max-inline-size: 30%;
+  max-inline-size: 30%;
 }
 
 .form-container {
-    grid-area: left;
-    display: grid; /* Använd grid för layout */
-    grid-template-columns: repeat(1); /* Tre kolumner */
+  grid-area: left;
+  display: grid; /* Använd grid för layout */
+  grid-template-columns: repeat(1); /* Tre kolumner */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(
+    140deg,
+    rgba(137, 130, 141, 1) 0%,
+    rgba(163, 155, 168, 1) 35%,
+    rgba(208, 197, 215, 1) 100%
+  );
+  width: 150px;
+  height: 300px;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px 60px 10px 60px;
+  box-shadow: rgb(124, 124, 124) 5px 5px 10px;
+  text-align: left;
+  font-weight: bolder;
 }
