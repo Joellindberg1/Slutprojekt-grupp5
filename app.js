@@ -63,6 +63,9 @@
 // ===========================================
 
 const renderMonsterCard = () => {
+    // Tömmer section class="collection"
+    const monsterArticle = document.querySelector(".collection");
+    monsterArticle.innerHTML = "";
 
     // Tömmer section class="collection"
     const monsterSection = document.querySelector(".collection");
@@ -70,18 +73,19 @@ const renderMonsterCard = () => {
 
     // loopar igenom state för att skapa monster-kort av innehållet
 
-    for (const m of state.collection) {
+    // for (const m of state.collection) {
+    state.collection.forEach(object => {
         // Skapar ny article-tag
         const monster = document.createElement("article");
         monster.className = "monster";
-        monster.id = m.name.replaceAll(" ", '-');
+        monster.id = object.name.replaceAll(" ", '-');
 
         // Skapar tabell till den nyskapade article-tag'en
         const table = document.createElement("table");
         const caption = document.createElement("caption");
         const h3 = document.createElement("h3");
-        table.className = m.name.replaceAll(" ", '-') + "-table";
-        h3.innerHTML = m.name;
+        table.className = object.name.replaceAll(" ", '-') + "-table";
+        h3.innerHTML = object.name;
         caption.appendChild(h3);
         table.appendChild(caption);
 
@@ -99,13 +103,13 @@ const renderMonsterCard = () => {
             table.appendChild(row);
         }
 
-        addRow("Type", m.type);
-        addRow("Color", m.color);
+        addRow("Type", object.type);
+        addRow("Color", object.color);
 
         i = 0; // DEN FUNKAR, DO NOT FUCK WITH UNLESS YOU WANT TO GET FUCKED
         for (element of monsterAttributes) {
 
-            addRow("Number of " + [element], m[element]);
+            addRow("Number of " + [element], object[element]);
 
             i++;
 
@@ -116,7 +120,7 @@ const renderMonsterCard = () => {
         // // Skapar en knapp för att redigera monster-attributen
         // const editButton = document.createElement("button");
         // editButton.className = "edit-button";
-        // editButton.id = "edit-" + m.name.replaceAll(" ", '-');
+        // editButton.id = "edit-" + allKeys[0].replaceAll(" ", '-');
         // editButton.type = "button";
         // editButton.innerHTML = "Edit monster";
 
@@ -141,65 +145,71 @@ const renderMonsterCard = () => {
         // }
 
         // //Lägger till monster-article i rätt container
+
         monsterSection.appendChild(monster);
-
-    }
+    });
 };
-
 
 // ========LÄGGER IN ARRAYS I FORMULÄR========
 // Funktion som skapar dynamiska monsterkort.
 // ===========================================
 window.addEventListener("load", (event) => {
     i = 0;
+    const colors = document.getElementById("monster-Colors");
     for (const element of monsterColors) {
-        const colors = document.getElementById("monster-Colors");
-        colors.value = i;
-        colors.innerHTML = monsterColors[i]
-        i++;
         const option = document.createElement("option");
+        colors.value = i;
         option.text = element;
         colors.add(option);
+        i++;
     }
 
     i = 0;
+    const types = document.getElementById("monster-Types");
     for (const element of monsterTypes) {
-        const types = document.getElementById("monster-Types");
-        types.value = i;
-        types.innerHTML = monsterTypes[i]
-        i++;
         const option = document.createElement("option");
+        types.value = i;
         option.text = element;
         types.add(option);
+        i++;
     }
 
     i = 0;
+    const monsterForm = document.getElementById("add-monster-form");
     for (const element of monsterAttributes) {
-        const monsterForm = document.getElementById("add-monster-form");
+
         const input = document.createElement("input");
         input.type = "number";
         input.value = "0";
-        input.main = element;
-        // input.name = `"+ ${element} + "`;
+        // input.main = element;
         input.name = element;
+
         const label = document.createElement("label");
         label.for = element;
-        label.innerHTML = element;
+        label.textContent = element;
 
         monsterForm.appendChild(label);
         monsterForm.appendChild(input);
+
         i++;
     }
 
 });
-
 
 // ==============APP STARTAR HÄR==============
 
 // Arrays som lagrar möjliga färger och typer för monster
 const monsterColors = ["Blue", "Green", "Red", "Brown", "Purple"];
 const monsterTypes = ["Firemonster", "Skymonster", "Watermonster"];
-const monsterAttributes = ["eyes", "arms", "tentacles", "horns", "balls"]; // OBS! Endast gemener för att matcha objektets nycklar
+const monsterAttributes = ["Eyes", "Arms", "Tentacles", "Horns"];
+
+const allKeys = ["name", "color", "type", ...monsterAttributes];
+const values = [];
+const allValues = [...values];
+
+
+
+
 
 /// !!! MÅSTE SKAPA ARRAY FÖR DE FYRA UTSEENDEATTRIBUTEN
 
@@ -209,51 +219,52 @@ const monsterAttributes = ["eyes", "arms", "tentacles", "horns", "balls"]; // OB
 const state = {
 
     collection: [
-        { name: "Grimblot", type: monsterTypes[1], color: monsterColors[1], addmonster(attribute) { 1 }, addmonster(attribute) { 2 }, addmonster(attribute) { 3 }, addmonster(attribute, index) { 2 } },
-        { name: "Zarok the Devourer", type: monsterTypes[0], color: monsterColors[0], addmonster(attribute) { 1 }, addmonster(attribute) { 2 }, addmonster(attribute) { 3 }, addmonster(attribute) { 4 } },
-        { name: "Blisterfang", type: monsterTypes[1], color: monsterColors[1], addmonster(attribute) { 1 }, addmonster(attribute) { 2 }, addmonster(attribute) { 3 }, addmonster(attribute) { 4 } },
-        { name: "Thraxxis", type: monsterTypes[2], color: monsterColors[2], addmonster(attribute) { 1 }, addmonster(attribute) { 2 }, addmonster(attribute) { 3 }, addmonster(attribute) { 4 } },
-        { name: "Murkspawn", type: monsterTypes[0], color: monsterColors[3], addmonster(attribute) { 1 }, addmonster(attribute) { 2 }, addmonster(attribute) { 3 }, addmonster(attribute) { 4 } },
-        { name: "Vorrgath", type: monsterTypes[1], color: monsterColors[4], addmonster(attribute) { 1 }, addmonster(attribute) { 2 }, addmonster(attribute) { 3 }, addmonster(attribute) { 4 } },
+        { name: "Grimblot", type: monsterTypes[1], color: monsterColors[1], },
+        { name: "Zarok the Devourer", type: monsterTypes[0], color: monsterColors[0], },
+        { name: "Blisterfang", type: monsterTypes[1], color: monsterColors[1], },
+        { name: "Thraxxis", type: monsterTypes[2], color: monsterColors[2], },
+        { name: "Murkspawn", type: monsterTypes[0], color: monsterColors[3], },
+        { name: "Vorrgath", type: monsterTypes[1], color: monsterColors[4], },
+
     ],
-    createNewMonster: [],
-
-
-    addMonster: function (name, type, color, attributeValues) {
-        const newMonster = {
-            name: name, // OBS! SKA VARA USER INPUT
-            type: type, // OBS! SKA VARA USER INPUT
-            color: color, // OBS! SKA VARA USER INPUT
-        };
-
-        monsterAttributes.forEach((attribute, index) => {
-            newMonster[attribute] = attributeValues[2, 3, 4, 5, 6] || 0; // OBS! attributeValues ska vara user input
-        });
-
-        this.collection.push(newMonster);
-
-    }
 };
 
-console.log(state.collection[0]);
-// state.addMonster("Test", monsterTypes[1], monsterColors[2], monsterAttributes[0], 3, 4, 5);
+
 renderMonsterCard();
 
+console.log(state.collection);
 
-document.getElementById("test").addEventListener("click", () => {
-    // Hardcoded test values for name, type, color, and attributes
-    const name = "Test Monster";
-    const type = monsterTypes[0]; // First type from monsterTypes array
-    const color = monsterColors[0]; // First color from monsterColors array
+document.getElementById("form-button").addEventListener("click", () => {
+    const name = document.getElementById("name").value;
+    const color = document.getElementById("monster-Colors").value;
+    const type = document.getElementById("monster-Types").value;
 
-    // Hardcoded attribute values for testing (e.g., 2 eyes, 3 arms, 4 tentacles, 1 horn)
-    const attributeValues = [2, 3, 4, 1, 2];
 
-    // Call the addMonster function to add a new monster to the state
-    state.addMonster(name, type, color, attributeValues);
 
-    // Re-render the monster cards after adding a new monster
+    const values = [name, color, type,];
+
+
+    monsterAttributes.forEach(attribute => {
+        const input = document.getElementsByName(attribute)[0];
+        values.push(parseInt(input.value));
+    });
+
+    const result = allKeys.reduce((obj, key, index) => {
+
+        obj[key] = values[index];
+        return obj;
+
+    }, {});
+
+
+
+    state.collection.push(result);
+
+
     renderMonsterCard();
 
-    console.log("Monster added:", state.collection);
+
+
+    // Rensar formulär efter submit
+    document.getElementById("add-monster-form").reset();
 });
