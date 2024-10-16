@@ -142,6 +142,7 @@ window.addEventListener("load", (event) => {
     types.value = i;
     types.innerHtml = monsterTypes[i];
     i++;
+    
     const option = document.createElement("option");
     option.text = element;
     types.add(option);
@@ -215,15 +216,15 @@ const state = {
   createNewMonster: [],
   addMonster: (name, type, color, eyes, arms, horns, tentacles) => {
     state.collection.push({ name, type, color, eyes, arms, horns, tentacles });
-    state.addMonster(
-      name,
-      type,
-      color,
-      parseInt(eyes),
-      parseInt(arms),
-      parseInt(horns),
-      parseInt(tentacles)
-    );
+    // state.addMonster(
+    //   name,
+    //   type,
+    //   color,
+    //   parseInt(eyes),
+    //   parseInt(arms),
+    //   parseInt(horns),
+    //   parseInt(tentacles)
+    // );
   },
 };
 
