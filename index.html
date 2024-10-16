@@ -12,47 +12,19 @@
 <body>
     <div id="container">
         <header>
+            <!-- <button type="button" id="test">TEST MF</button> -->
         </header>
         <div class="form-container">
-            <table>
-                
-           
-            <form action="" method="post">
-                
+            <form id="add-monster-form" action="" method="post">
                 <label for="name">Name</label>
                 <input type="text" name="name" id="name" />
-            
-        
-                <label for="monsterColors">MonsterColors</label>
-                <select name="monster.Colors" id="monster-Colors"></select>
-            
-        
-                <label for="monster-Types">MonsterTypes</label>
+                <label for="monsterColors">Monster Colors</label>
+                <select name="monster.Colours" id="monster-Colors"></select>
+                <label for="monster-Types">Monster Types</label>
                 <select name="monster-types" id="monster-Types"></select>
-            
-        
-                <label for="eyes">Eyes</label>
-                <input type="number" name="eyes" value="0" min="0" />
-            
-        
-                <label for="arms">Arms</label>
-                <input type="number" name="arms" value="0" min="0" />
-            
-        
-                <label for="tentacles">Tentacles</label>
-                <input type="number" name="tentacles" value="0" min="0" />
-            
-        
-                <label for="Horns">Horns</label>
-                <input type="number" name="horn" value="0" min="0" />
-            
-                <button type="button" id="form-button">Add monster</button>
-                <p id="output"></p>
-                </form>
-            
-            </table>
-            
-        </div>        
+            </form>
+            <button type="button" id="form-button">Add monster</button>
+        </div>
         <main>
             <section class="collection"></section>
         </main>
@@ -88,8 +60,6 @@
         </aside>
         <footer>
         </footer>
-    <!-- </div>
-      -->
 </body>
 
 </html>
