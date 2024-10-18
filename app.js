@@ -161,6 +161,58 @@ window.addEventListener("load", (event) => {
 const monsterColors = ["Blue", "Green", "Red", "Brown", "Purple"];
 const monsterTypes = ["Firemonster", "Skymonster", "Watermonster"];
 
+
+//<=========================================================================>//
+//<========Försök till att göra om all html till JS som skapar html=========>//
+//<=========================================================================>//
+
+// document.addEventListener("DOMContentLoaded", () => {
+//     const mainContainer = document.getElementById("container");
+
+//     const asideStatistik = document.createElement("aside");
+//     asideStatistik.className = "database"; // Klass för CSS-styling
+//     const footer = document.createElement("footer");
+
+//     const statistikHeader = document.createElement("div");
+//     statistikHeader.className = "statistik";
+//     statistikHeader.innerHTML = "Filter";
+
+//     const filterContainer = document.createElement("div");
+//     filterContainer.className = "filter-container";
+
+//     const headerColor = document.createElement("h4");
+//     headerColor.innerHTML = "Färg";
+
+//     const filterColors = document.createElement("div");
+//     filterColors.className = "filters-color";
+
+//     const headerType = document.createElement("h4");
+//     headerType.innerHTML = "Typ";
+
+//     const filterType = document.createElement("div");
+//     filterType.className = "filters-monster";
+
+//     mainContainer.appendChild(asideStatistik);
+//     mainContainer.appendChild(footer);
+
+//     asideStatistik.appendChild(statistikHeader);
+//     asideStatistik.appendChild(filterContainer);
+
+//     filterContainer.appendChild(headerColor);
+//     filterContainer.appendChild(filterColors);
+//     filterContainer.appendChild(headerType);
+// });
+
+//<=========================================================================>//
+//<========Färsök till att göra om all html till JS som skapar html=========>//
+//<=========================================================================>//
+
+// resetButton = document.createElement("button");
+// resetButton.className = "reset-filter-button"; // Klass för knappen
+// resetButton.type = "button"; // Definera type för element
+// resetButton.innerText = "Ta bort filter"; // Text på reset-knappen
+
+
 // State innehåller datan från användarens input samt standardvärdena för appen
 const state = {
     collection: [
@@ -181,22 +233,21 @@ state.addMonster("Test", monsterTypes[1], monsterColors[2], 2, 3, 4, 5);
 renderMonsterCard(); // Rendera alla monster kort från början
 
 
-// Skapa arrays för räkning av färger och typer av monster
+// Skapa arrays för räkning av färger och typer av monster - Detta används senare i skapande av knappar
 const colorCount = new Array(monsterColors.length).fill(0);  // Initierar med 0
 const typeCount = new Array(monsterTypes.length).fill(0);    // Initierar med 0
 
-// Loopa igenom collection-arrayen för att räkna färger och typer
+// Loopa igenom collection-arrayen för att jämföra index från arrayer "monsterColors och monsterTypes" 
+// om samma index = Samma färg och lägg till i counter array för att skickas till korten när dem skapas
 state.collection.forEach(monster => {
-    // Tar reda på index i arryen monsterColor och type för att matcha räknaren och arryen med färger och typer. 
     const colorIndex = monsterColors.indexOf(monster.color);
     const typeIndex = monsterTypes.indexOf(monster.type);
     
-    // Om index inte är -1, plussa på en. Detta för färg. 
+    // Om index inte är -1, plussa på en. Detta för färg. -1 = färg finns inte i array och är felaktig och räknas då inte. 
     if (colorIndex !== -1) {
         colorCount[colorIndex]++;
     }
     
-    // Om index inte är -1, plussa på en. Detta för typ. 
     if (typeIndex !== -1) {
         typeCount[typeIndex]++;
     }
@@ -228,82 +279,60 @@ monsterColors.forEach((color, index) => {
     // knappen jag har skapat nu sätter jag som barn till "filters-color" classen i index.html
     filterContainerColor.appendChild(filterButtonColor);
 
-    // Lägg till en event listener för när användaren klickar på knappen
+    // Lägg till en event listener för när användaren klickar på en färg filter knapp
     filterButtonColor.addEventListener("click", () => {
-        renderMonsterCard(color); // Kallar på renderMonsterCard som då endast visar färg som är klickad på då färg är definerad tidigare i innerHTML. 
+        // Kallar på renderMonsterCard som då endast visar färg som är klickad på då färg är definerad tidigare i innerHTML.
+        renderMonsterCard(color);  
 
-        // Kontrollera om reset-knappen redan finns
-        if (!resetButton) {
-            // Skapa en ny div-container för reset-knappen
-            const resetContainer = document.createElement("div");
-            resetContainer.className = "reset-filter-container"; // Klass för CSS-styling
-
-            // Skapa reset-knappen
-            resetButton = document.createElement("button");
-            resetButton.className = "reset-filter-button"; // Klass för knappen
-            resetButton.innerText = "Reset Filter"; // Text på reset-knappen
-
-            // Lägg till reset-knappen i resetContainer
-            resetContainer.appendChild(resetButton); // Lägg knappen i containern
-
-            // Lägg till resetContainer i filterContainer (eller resetFilter om du föredrar det)
-            filterContainer.appendChild(resetContainer); // Lägg till containern i griden
-
-            // Event listener för reset-knappen, som visar alla monster igen
-            resetButton.addEventListener("click", () => {
-                renderMonsterCard(); // Rendera om alla monster
-                resetContainer.remove(); // Ta bort containern och knappen efter att den har tryckts
-                resetButton = null; // Återställ resetButton till null
-            });
-        }
+        //Kallar på en funktion som skapar en reset-filter knapp och som sedan tar bort den om den används. Check för ifall knapp redan finns, finns i global. 
+        createResetButton();
     });
 });
 
-// Skapa filterknappar för monster typer
+//Repeat från color fast till monster typ istället. 
 monsterTypes.forEach((type, index) => {
-    //Skapar elementet "Button"
     const filterButtonType = document.createElement("button");
-    //Ger knappen ett klassnamn - "Filter-button"
     filterButtonType.className = "filter-button";
-    //Bestämmer att "FilterbuttonType" ska bli typen "Button"
     filterButtonType.type = "button";
 
-    // Texten på knappen visar typen och antal monster som matchar
     filterButtonType.innerHTML = `${type} (${typeCount[index]})`;
 
-    // knappen jag har skapat nu sätter jag som barn till "filters-monster" classen i index.html
     filterContainerType.appendChild(filterButtonType);
 
-    // Lägg till en event listener för när användaren klickar på knappen
     filterButtonType.addEventListener("click", () => {
-        renderMonsterCard(null, type); // Filtrera monster baserat på vald typ
-
-        // Kontrollera om reset-knappen redan finns
-        if (!resetButton) {
-            // Skapa en ny div-container för reset-knappen
-            const resetContainer = document.createElement("div");
-            resetContainer.className = "reset-filter-container"; // Klass för CSS-styling
-
-            // Skapa reset-knappen
-            resetButton = document.createElement("button");
-            resetButton.className = "reset-filter-button"; // Klass för knappen
-            resetButton.innerText = "Reset Filter"; // Text på reset-knappen
-
-            // Lägg till reset-knappen i resetContainer
-            resetContainer.appendChild(resetButton); // Lägg knappen i containern
-
-            // Lägg till resetContainer i filterContainer (eller resetFilter om du föredrar det)
-            filterContainer.appendChild(resetContainer); // Lägg till containern i griden
-
-            // Event listener för reset-knappen, som visar alla monster igen
-            resetButton.addEventListener("click", () => {
-                renderMonsterCard(); // Rendera om alla monster
-                resetContainer.remove(); // Ta bort containern och knappen efter att den har tryckts
-                resetButton = null; // Återställ resetButton till null
-            });
-        }
+        renderMonsterCard(null, type); 
+        createResetButton();
     });
 });
+
+// Funktion för att skapa och hantera reset-knappen
+function createResetButton() {
+    // Kontrollera om resetButton redan finns
+    if (!resetButton) {
+        // Skapa en ny div-container för reset-knappen 
+        const resetContainer = document.createElement("div");
+        resetContainer.className = "reset-filter-container"; // Klass för CSS-styling
+
+        // Skapa reset-knappen
+        resetButton = document.createElement("button");
+        resetButton.className = "reset-filter-button"; // Klass för knappen
+        resetButton.type = "button"; // Definera type för element
+        resetButton.innerText = "Ta bort filter"; // Text på reset-knappen
+
+        // knappen jag har skapat nu sätter jag som barn till "reset-filter-container" classen i index.html
+        resetContainer.appendChild(resetButton);
+
+        // knappen jag har skapat nu sätter jag som barn till "filter-container" classen i index.html
+        filterContainer.appendChild(resetContainer);
+
+        // Event listener för reset-knappen, som visar alla monster igen
+        resetButton.addEventListener("click", () => {
+            renderMonsterCard(); // Rendera monsterkort för inga filter
+            resetContainer.remove(); // Ta bort containern och knappen efter att den har tryckts
+            resetButton = null; // Återställ resetButton - Detta för att kunna återskapa resetknapp
+        });
+    }
+}
 
 
 
