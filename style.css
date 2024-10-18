@@ -57,9 +57,8 @@ header {
 /* ------------------------------Aside börjar här------------------------------------------- */
 /*-----------------------------------------------------------------------------------------  */
 
-/* Sido-menyn för filter/datan
-  Här är en hover animation som får rutan att växa ut när man hovrar över asiden
-  När man inte hovrar så syns ingen information. När man hovrar så kommer information upp. */
+/* Sido-menyn för filter / statistik. 
+Finns hover funktion på asiden. */
 aside {
     /* background-color: #B8C5D6; */
     grid-area: database;
@@ -74,39 +73,29 @@ aside {
 
 /* :Hover ger asiden andra attribute när man hovrar den och den växer också till bestämd bredd.  */
 aside:hover {
-  max-width: 300px;
-  /* Ställ in önskad bredd när hover */
+    max-width: 275px; /* Bestämmer bredd för när aside är hovrad */
+    border-radius: 60px 0px 0px 60px; /* Rundade kanter för aside - Gjort dem rundare när man hovrar för att matcha rundningen på monsterkorten. */
 }
 
-/* Ändrar om texten "monster-Statistik" så att den är vertikal istället för horisontell. */
-aside caption {
-  writing-mode: vertical-rl;
-  /* Gör texten vertikal */
-  /* transform: rotate(180deg); Rotera texten för att vara rättvänd */
-  font-weight: bold;
-  /* Fetstil */
-  margin-bottom: 20px;
-  /* Avstånd under rubriken */
-  transition: writing-mode 0.3s ease, transform 0.3s ease;
-  /* Mjuk övergång för stiländringar */
+/* Ändrar om texten "Filter" så att den är vertikal istället för horisontell. när aside inte är hovrad */
+.statistik {
+    writing-mode: vertical-rl; /* Gör texten vertikal */
+    text-decoration: underline overline 2px #dfd2d2;
+    margin-top: 10px;
+    text-underline-offset: 7px;
+    font-weight: bold; 
+    font-size: x-large;
+    text-align: center; 
+    letter-spacing: 5px;
+    margin-bottom: 5px; /* Avstånd under caption */
+    transition: writing-mode 0.3s ease, transform 0.3s ease; /* Mjuk övergång för stiländringar */
 }
 
-/* Vid hover så visas "monster-statistik" horisontellt igen. */
-aside:hover caption {
-  writing-mode: horizontal-tb;
-  /* Gör texten horisontell vid hover */
-  /* transform: rotate(0deg); Ingen rotation vid hover */
-  font-weight: bold;
-  /* Fet stil */
-  text-align: center;
-  /* Centrera texten */
-  margin-bottom: 10px;
-  /* Avstånd under caption */
+/* Vid hover så visas "filtret" horisontellt igen. */
+aside:hover .statistik {
+    writing-mode: horizontal-tb; /* Gör texten horisontell vid hover */
 }
 
-/* Se till att det är 3 kolumner och sedan ny rad. 
-  Dölja knapparna när det inte är hover
-  långsam transition */
 .filter-container {
     /* startar grid layout för barnen i filter-container */
     display: grid;
@@ -121,31 +110,33 @@ aside:hover caption {
 }
 
 /* Visa knapparna när det är hover */
-aside:hover .filter-container {
-  opacity: 1;
-  /* Visa knapparna vid hover */
-  visibility: visible;
-  /* Gör knapparna synliga */
+aside:hover .filter-container  {    
+    opacity: 1; /* Visa knapparna vid hover */
+    visibility: visible; /* Gör knapparna synliga */
+    transition: opacity 1.5s ease, visibility 0s; /*Fadear in knapparna så dem syns sakta men säkert*/
 }
 
-.filters {
-  display: grid;
-  /* Använd grid för filtreringsknapparna */
-  grid-template-columns: repeat(3, 1fr);
-  /* Tre kolumner för knapparna */
-  gap: 10px;
-  /* Avstånd mellan knapparna */
-  margin-bottom: 20px;
-  /* Marginal under varje filteravsnitt */
+.filters-color, .filters-monster{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    gap: 10px
+}
+
+.reset-filter-container {
+    display: grid;
+    grid-column: 1 / -1; /* Centrera knappen över hela bredden */
+}
+
+.reset-filter-button{
+    font-size: 18px;
+    font-weight: bold;
 }
 
 h4 {
-  grid-column: span 3;
-  /* Gör rubrikerna hela bredden av grid */
-  margin: 10px 0;
-  /* Avstånd ovanför och nedanför rubrikerna */
-  text-align: center;
-  /* Centrera texten */
+    grid-column: 1 / -1; /* Centrera knappen över hela bredden */
+    margin: 10px 0; /* Avstånd ovanför och nedanför rubrikerna */
+    text-align: center; /* Centrera texten */
+
 }
 
 .filter-button, .reset-filter-button {
@@ -161,9 +152,8 @@ h4 {
 }
 
 /* Hover-effekt */
-.filter-button:hover {
-  background-color: #f7f7f7;
-  /* Ljusgrå bakgrund vid hover */
+.filter-button:hover, .reset-filter-button:hover {
+    background-color: #dfd2d2; /* Ljusgrå bakgrund vid hover */
 }
 
 /*-----------------------------------------------------------------------------------------  */
