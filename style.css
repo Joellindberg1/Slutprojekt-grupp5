@@ -210,8 +210,9 @@ img {
   grid-area: left;
   display: grid; /* Använd grid för layout */
   grid-template-columns: repeat(1); /* Tre kolumner */
-  display: flex;
+  padding: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   justify-content: space-between;
   background: linear-gradient(
     140deg,
@@ -219,12 +220,26 @@ img {
     rgba(163, 155, 168, 1) 35%,
     rgba(208, 197, 215, 1) 100%
   );
-  width: 60%;
-  height: 20%;
+  width: 65%;
+  height: 40%;
   margin: 10%;
   padding: 10%;
   border-radius: 10px 60px 10px 60px;
+  overflow: hidden;
   box-shadow: rgb(124, 124, 124) 5px 5px 10px;
   text-align: left;
   font-weight: bolder;
+}
+#add-monster-form {
+  display: grid;
+}
+#form-button {
+  padding: 2px;
+  margin: 2;
+  margin-top: 10px;
+  border: 2px solid rgba(137, 130, 141, 1);
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  max-height: 30px;
 }
