@@ -177,7 +177,7 @@ const renderMonsterCard = () => {
             // Confirm button click event
             confirmButton.addEventListener('click', (e) => {
                 e.preventDefault();
-                pushMonsters();
+
 
                 // Hittar rätt objekt att uppdatera med nya värden
                 const monsterIndex = state.collection.findIndex(monster => monster.name === `${object.name}`);
