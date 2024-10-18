@@ -228,3 +228,36 @@ img {
   text-align: left;
   font-weight: bolder;
 }
+
+#alertDiv {
+
+  display: grid; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* display: flex; */
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto auto;
+  position: fixed;  
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%);
+  background-color: white; 
+ 
+  z-index: 1000;
+ 
+  min-height: 40%;
+
+  min-width: 40%;
+ 
+  
+  
+}
+
+img {
+
+
+  min-height: 100%;
+  min-width: 100%;
+}
