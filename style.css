@@ -64,17 +64,24 @@ aside {
     grid-area: database;
     background: linear-gradient(140deg, rgba(137, 130, 141, 1) 0%, rgba(163, 155, 168, 1) 35%, rgba(208, 197, 215, 1) 100%);
     padding: 10px;
+    position: relative;
+    width: 50px; /* Standardbredd när den inte är hovrad */
     height: fit-content;
-    border-radius: 30px 0px 0px 30px; /* Rundade kanter för aside */
-    width: 100%; /* Bestämmer att widthen är 100% av sin kolumn*/
-    max-width: 50px; /* Bestämmer att widthen max får vara x */
-    transition: max-width 1.5s ease; /* Övergång för hover när den växer och krymper */
+    border-radius: 30px 0px 0px 0px;
+    transition: width 1.5s ease; /* Mjuk övergång för breddändring */
+    overflow: hidden; /* gör så att inget innehåll går utanför aside fast än att aside är mindre än vad innehållet behöver */
+    margin: 1rem 0 1rem 1rem;
+    /* padding: 2rem; */
+    border-radius: 20px;
+    box-shadow: rgb(124, 124, 124) 5px 5px 10px;
+    border: 1px solid #ddd;
+
 }
 
 /* :Hover ger asiden andra attribute när man hovrar den och den växer också till bestämd bredd.  */
 aside:hover {
-    max-width: 275px; /* Bestämmer bredd för när aside är hovrad */
-    border-radius: 60px 0px 0px 60px; /* Rundade kanter för aside - Gjort dem rundare när man hovrar för att matcha rundningen på monsterkorten. */
+    width: 275px; /* Bredd för när aside är hovrad */
+    border-radius: 10px 0px 10px 60px; /* Rundade kanter för aside - Gjort dem rundare när man hovrar */
 }
 
 /* Ändrar om texten "Filter" så att den är vertikal istället för horisontell. när aside inte är hovrad */
@@ -87,7 +94,7 @@ aside:hover {
     font-size: x-large;
     text-align: center; 
     letter-spacing: 5px;
-    margin-bottom: 5px; /* Avstånd under caption */
+    margin-left: 10px; /* Avstånd under caption */
     transition: writing-mode 0.3s ease, transform 0.3s ease; /* Mjuk övergång för stiländringar */
 }
 
@@ -103,31 +110,32 @@ aside:hover .statistik {
     grid-template-rows: auto auto auto auto auto;
     opacity: 0; /* Dölja knapparna */
     visibility: hidden; /* Dölja knapparna */
-    transition: opacity 1.5s ease, visibility 1.5s; /*Fadear in knapparna så dem syns sakta men säkert - */
+    transition: opacity 1.5s ease, visibility 1.5s; /* Fadear in knapparna så dem syns sakta men säkert */
     gap: 10px;
     justify-content: space-between;
     margin: 5px;
 }
 
 /* Visa knapparna när det är hover */
-aside:hover .filter-container  {    
+aside:hover .filter-container {    
     opacity: 1; /* Visa knapparna vid hover */
     visibility: visible; /* Gör knapparna synliga */
-    transition: opacity 1.5s ease, visibility 0s; /*Fadear in knapparna så dem syns sakta men säkert*/
+    transition: opacity 1.5s ease, visibility 0s; /* Fadear in knapparna så dem syns sakta men säkert */
 }
 
-.filters-color, .filters-monster{
+.filters-color, .filters-monster {
     display: grid;
     grid-template-columns: repeat(2, minmax(120px, 1fr));
-    gap: 10px
+    gap: 10px;
 }
 
 .reset-filter-container {
     display: grid;
     grid-column: 1 / -1; /* Centrera knappen över hela bredden */
+    margin-left: 10px;
 }
 
-.reset-filter-button{
+.reset-filter-button {
     font-size: 18px;
     font-weight: bold;
 }
@@ -136,7 +144,6 @@ h4 {
     grid-column: 1 / -1; /* Centrera knappen över hela bredden */
     margin: 10px 0; /* Avstånd ovanför och nedanför rubrikerna */
     text-align: center; /* Centrera texten */
-
 }
 
 .filter-button, .reset-filter-button {
@@ -145,7 +152,7 @@ h4 {
     border-radius: 20px; /* Rundade kanter */
     padding: 10px; /* Utrymme inuti knappen */
     font-size: 14px; /* Textstorlek */
-    cursor: pointer; /*Pekar muspekaren*/
+    cursor: pointer; /* Pekar muspekaren */
     transition: background-color 0.5s, color 0.5s; /* Mjuk övergång */
     min-height: 50px; /* Minimum höjd för knapparna */
     text-align: center; /* Centrera texten i knapparna */
@@ -159,6 +166,7 @@ h4 {
 /*-----------------------------------------------------------------------------------------  */
 /* ------------------------------Aside slutar här------------------------------------------- */
 /*-----------------------------------------------------------------------------------------  */
+
 .collection {
   grid-area: content;
   display: flex;
@@ -290,3 +298,5 @@ img {
   min-height: 60%;
   min-width: 80%;
 }
+
+
