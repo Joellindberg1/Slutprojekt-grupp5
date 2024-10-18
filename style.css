@@ -61,24 +61,15 @@ header {
   Här är en hover animation som får rutan att växa ut när man hovrar över asiden
   När man inte hovrar så syns ingen information. När man hovrar så kommer information upp. */
 aside {
-  /* background-color: #B8C5D6; */
-  grid-area: database;
-  background: linear-gradient(140deg,
-      rgba(137, 130, 141, 1) 0%,
-      rgba(163, 155, 168, 1) 35%,
-      rgba(208, 197, 215, 1) 100%);
-  padding: 10px;
-  border-radius: 10px;
-  /* Rundade kanter för aside */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  /* Skugga för att ge djup */
-  width: 100%;
-  /* Full bredd inom sin kolumn */
-  max-width: 50px;
-  /* Maximal bredd för aside */
-  transition: max-width 1.5s ease;
-  /* Övergång för bredd */
-  margin-left: auto;
+    /* background-color: #B8C5D6; */
+    grid-area: database;
+    background: linear-gradient(140deg, rgba(137, 130, 141, 1) 0%, rgba(163, 155, 168, 1) 35%, rgba(208, 197, 215, 1) 100%);
+    padding: 10px;
+    height: fit-content;
+    border-radius: 30px 0px 0px 30px; /* Rundade kanter för aside */
+    width: 100%; /* Bestämmer att widthen är 100% av sin kolumn*/
+    max-width: 50px; /* Bestämmer att widthen max får vara x */
+    transition: max-width 1.5s ease; /* Övergång för hover när den växer och krymper */
 }
 
 /* :Hover ger asiden andra attribute när man hovrar den och den växer också till bestämd bredd.  */
@@ -117,18 +108,16 @@ aside:hover caption {
   Dölja knapparna när det inte är hover
   långsam transition */
 .filter-container {
-  display: grid;
-  /* Använd grid för layout */
-  grid-template-columns: repeat(3, 1fr);
-  /* Tre kolumner */
-  gap: 10px;
-  /* Avstånd mellan kolumnerna */
-  opacity: 0;
-  /* Dölja knapparna */
-  visibility: hidden;
-  /* Dölja knapparna */
-  transition: opacity 1.5s ease;
-  /* Mjuk övergång */
+    /* startar grid layout för barnen i filter-container */
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto auto;
+    opacity: 0; /* Dölja knapparna */
+    visibility: hidden; /* Dölja knapparna */
+    transition: opacity 1.5s ease, visibility 1.5s; /*Fadear in knapparna så dem syns sakta men säkert - */
+    gap: 10px;
+    justify-content: space-between;
+    margin: 5px;
 }
 
 /* Visa knapparna när det är hover */
@@ -159,27 +148,16 @@ h4 {
   /* Centrera texten */
 }
 
-.filter-button {
-  background-color: white;
-  /* Vit bakgrund för knapparna */
-  border: 2px solid rgba(116, 79, 198, 1);
-  /* Ljusgrå kant */
-  border-radius: 20px;
-  /* Rundade kanter */
-  padding: 10px;
-  /* Utrymme inuti knappen */
-  font-size: 14px;
-  /* Textstorlek */
-  cursor: pointer;
-  /* Pekar muspekaren */
-  transition: background-color 0.3s, color 0.3s;
-  /* Mjuk övergång */
-  flex: 1;
-  /* Gör att knapparna kan expandera lika mycket i tillgängligt utrymme */
-  min-height: 50px;
-  /* Minimum höjd för knapparna */
-  text-align: center;
-  /* Centrera texten i knapparna */
+.filter-button, .reset-filter-button {
+    background-color: white; /* Vit bakgrund för knapparna */
+    border: 2px solid rgba(116, 79, 198, 1); /* Ljusgrå kant */
+    border-radius: 20px; /* Rundade kanter */
+    padding: 10px; /* Utrymme inuti knappen */
+    font-size: 14px; /* Textstorlek */
+    cursor: pointer; /*Pekar muspekaren*/
+    transition: background-color 0.5s, color 0.5s; /* Mjuk övergång */
+    min-height: 50px; /* Minimum höjd för knapparna */
+    text-align: center; /* Centrera texten i knapparna */
 }
 
 /* Hover-effekt */
