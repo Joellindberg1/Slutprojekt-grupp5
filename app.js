@@ -222,18 +222,6 @@ const state = {
   ],
 };
 
-renderMonsterCard();
-
-collection: [
-  { name: "Grimblot", type: monsterTypes[1], color: monsterColors[1], },
-  { name: "Zarok the Devourer", type: monsterTypes[0], color: monsterColors[0], },
-  { name: "Blisterfang", type: monsterTypes[1], color: monsterColors[1], },
-  { name: "Thraxxis", type: monsterTypes[2], color: monsterColors[2], },
-  { name: "Murkspawn", type: monsterTypes[0], color: monsterColors[3], },
-  { name: "Vorrgath", type: monsterTypes[1], color: monsterColors[4], },
-
-],
-
 
   renderMonsterCard();
 
