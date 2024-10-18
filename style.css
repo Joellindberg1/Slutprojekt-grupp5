@@ -102,6 +102,7 @@ aside:hover .statistik {
     transition: opacity 1.5s ease, visibility 1.5s; /*Fadear in knapparna så dem syns sakta men säkert - */
     gap: 10px;
     justify-content: space-between;
+    margin: 5px;
 }
 
 /* Visa knapparna när det är hover */
