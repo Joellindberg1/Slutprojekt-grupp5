@@ -5,13 +5,15 @@
 #B8C5D6 Powder blue
 #EDF5FC Alice blue
 */
-/* COLORS
-#272D2D Gunmetal
-#744FC6 State blue
-#A39BA8 Rose quartz
-#B8C5D6 Powder blue
-#EDF5FC Alice blue
-*/
+
+
+/*@media (min-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones } */
+/*@media (min-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide.  } */
+/*@media (min-width:641px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones  }
+/*@media (min-width:961px)  { /* tablet, landscape iPad, lo-res laptops ands desktops }
+/*@media (min-width:1025px) { /* big landscape tablets, laptops, and desktops }
+/*@media (min-width:1281px) { /* hi-res laptops and desktops }
+
 /*-----------------------------------------------------------------------------------------  */
 /* ----------------------Reset, body, container börjar här---------------------------------- */
 /*-----------------------------------------------------------------------------------------  */
@@ -41,7 +43,28 @@ body {
     "topbar topbar topbar"
     "left content database"
     "footer footer footer";
+    
+   
 }
+
+@media screen and (max-width: 600px)  {
+
+  #container {
+  display: grid;
+  min-height: 100%;
+  width: 100vw;
+  grid-template-rows: auto auto auto auto;
+  grid-template-columns: auto auto;
+  grid-template-areas:
+    "topbar topbar"
+    "left database"
+    "content content"
+    "footer footer";
+  }
+
+ }
+
+
 
 header {
   background: linear-gradient(170deg,
@@ -69,6 +92,14 @@ aside {
     width: 100%; /* Bestämmer att widthen är 100% av sin kolumn*/
     max-width: 50px; /* Bestämmer att widthen max får vara x */
     transition: max-width 1.5s ease; /* Övergång för hover när den växer och krymper */
+}
+
+@media screen and (max-width: 600px)  {
+  aside{
+    grid-area: database;
+    width: 1fr;
+    height: 50px;
+  }
 }
 
 /* :Hover ger asiden andra attribute när man hovrar den och den växer också till bestämd bredd.  */
@@ -165,15 +196,25 @@ h4 {
   flex-flow: row wrap;
 }
 
+/* @media screen and (max-width: 600px)  {
+  .collection {
+    display: grid;
+    grid-area: content;
+    grid-template-columns: auto auto;
+
+  }
+} */
+
+
+
+
 footer {
   grid-area: footer;
   background-color: rgb(79, 11, 128);
   height: 5vh;
 }
 
-main {
-  background-color: #edf5fc;
-}
+
 
 .monster {
   display: flex;
@@ -184,7 +225,7 @@ main {
       rgba(163, 155, 168, 1) 35%,
       rgba(208, 197, 215, 1) 100%);
   width: 300px;
-  height: 300px;
+  height: fit-content;
   margin: 20px;
   padding: 20px;
   border-radius: 10px 60px 10px 60px;
@@ -192,12 +233,25 @@ main {
   text-align: left;
 }
 
+@media screen and (max-width: 600px)  {
+
+  .monster {
+    /* width: 50vw; */
+  }
+
+}
+
+
 
 table {
   padding: 5px;
+  
 }
 
+
+
 h3 {
+  
   font-size: xx-large;
   margin: 5px;
 }
@@ -289,4 +343,40 @@ img {
 
   min-height: 60%;
   min-width: 80%;
+}
+
+
+.edit-button, .confirm-button, .cancel-button, .remove-button {
+    background-color: #EDF5FC;
+    color:#2A3439;
+    background-image: linear-gradient(170deg,
+    /* rgba(63, 43, 109, 1) 0%, */
+    rgb(157, 140, 196) 0%,
+    rgb(208, 191, 246) 30%,
+    rgba(237, 245, 252, 1) 100%);
+    background-size: 400% 400%;
+    background-position: 100% 100%;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-position 0.5s ease;
+    min-height: 30px;
+    width: fit-content;
+    max-width: 50%;
+    text-align: center;
+    margin: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.edit-button:hover, .confirm-button:hover, .cancel-button:hover, .remove-button:hover {
+    background-position: 20% 20%;
+   
+}
+
+
+.card-button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
