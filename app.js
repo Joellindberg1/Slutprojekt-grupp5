@@ -5,7 +5,6 @@
 // =============================================
 const customAlert = () => {
 
-
     const parent = document.querySelector('body');
     const customAlert = document.createElement('div');
     customAlert.id = "alertDiv";
@@ -66,28 +65,50 @@ const renderMonsterCard = () => {
         monster.className = "monster";
         monster.id = object.name.replaceAll(" ", '-');
 
+        // Tags för att vända kort i mobil
+        const monsterInner = document.createElement("div");
+        monsterInner.className = "monster-inner";
+        monster.appendChild(monsterInner);
+
+        const monsterFront = document.createElement("div");
+        monsterFront.className = "monster-front";
+        monsterInner.appendChild(monsterFront);
+
+        const monsterBack = document.createElement("div");
+        monsterBack.className = "monster-back";
+        monsterInner.appendChild(monsterBack);
+
+
         // Skapar tabell till den nyskapade article-tag'en
         const table = document.createElement("table");
-        const caption = document.createElement("caption");
-        const h3 = document.createElement("h3");
         table.className = object.name.replaceAll(" ", '-') + "-table";
+        monsterBack.appendChild(table);
+
+        // const caption = document.createElement("caption");
+        // table.appendChild(caption);
+
+        const h3 = document.createElement("h3");
         h3.innerHTML = object.name;
-        caption.appendChild(h3);
-        table.appendChild(caption);
+        monsterFront.appendChild(h3);
+
 
         // Stödfunktion för att skapa rader i tabellen
         const addRow = (label, value) => {
             const row = document.createElement("tr");
+            row.className = "hide-on-mobile";
+            table.appendChild(row);
+
             const th = document.createElement("th");
             th.scope = "row";
             th.innerHTML = `${label}: `;
+            row.appendChild(th);
+
             const td = document.createElement("td");
             td.innerHTML = value;
             td.className = value;
             td.id = object.name + "-" + label.replaceAll(" ", '-');
-            row.appendChild(th);
             row.appendChild(td);
-            table.appendChild(row);
+
         }
 
         // Skapar radernas innehåll
@@ -102,7 +123,6 @@ const renderMonsterCard = () => {
 
         }
 
-        monster.appendChild(table);
 
         // Skapar knapp-container
         const cardButtonContainer = document.createElement('div');
@@ -114,9 +134,8 @@ const renderMonsterCard = () => {
         editButton.id = "edit-" + object.name.replaceAll(" ", '-');
         editButton.type = "button";
         editButton.innerHTML = "Edit monster";
-
         cardButtonContainer.appendChild(editButton);
-        monster.appendChild(cardButtonContainer);
+        monsterBack.appendChild(cardButtonContainer);
 
         // EVENT: Edit
         editButton.addEventListener('click', (e) => {
@@ -259,7 +278,6 @@ const renderMonsterCard = () => {
         })
         monsterSection.appendChild(monster);
     })
-
 }
 
 // ========LÄGGER IN ARRAYS I FORMULÄR========

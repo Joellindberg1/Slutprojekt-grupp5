@@ -12,7 +12,86 @@
 /*@media (min-width:641px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones  }
 /*@media (min-width:961px)  { /* tablet, landscape iPad, lo-res laptops ands desktops }
 /*@media (min-width:1025px) { /* big landscape tablets, laptops, and desktops }
-/*@media (min-width:1281px) { /* hi-res laptops and desktops }
+/*@media (min-width:1281px) { /* hi-res laptops and desktops } */
+
+
+@media screen and (max-width: 600px)  {
+/* FLIP CARDS */
+  .monster {
+    display: flex;
+    flex-direction: column;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    width: 1fr;
+    background-color: transparent;
+    min-height: 200px;
+    border: 1px solid #f1f1f1;
+    perspective: 1000px; /* Remove this if you don't want the 3D effect */
+    margin: 10px;
+    
+    
+  }
+
+  
+  /* This container is needed to position the front and back side */
+  .monster-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+  
+  /* Do an horizontal flip when you move the mouse over the flip box container */
+  .monster:hover .monster-inner {
+    transform: rotateX(180deg);
+  }
+  
+  /* Position the front and back side */
+  .monster-front, .monster-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+  }
+  
+  /* Style the front side (fallback if image is missing) */
+  .monster-front {
+    border-radius: 10px 60px 10px 60px;
+    background: linear-gradient(140deg,
+      rgba(137, 130, 141, 1) 0%,
+      rgba(163, 155, 168, 1) 35%,
+      rgba(208, 197, 215, 1) 100%);
+    color: black;
+    box-shadow: rgb(124, 124, 124) 5px 5px 10px;
+  }
+  
+  /* Style the back side */
+  .monster-back {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: fit-content;
+    border-radius: 60px 10px 60px 10px;
+    background: linear-gradient(170deg,
+      rgba(63, 43, 109, 1) 0%,
+      rgba(116, 79, 198, 1) 35%,
+      rgba(155, 114, 246, 1) 100%);
+    box-shadow: rgb(124, 124, 124) 5px 5px 10px;
+    transform: rotateY(180deg);
+    rotate: 180deg;
+    text-align: left;
+  }
+  
+  h3 {
+  
+    font-size: x-large ;
+    margin: 5px;
+  }
+
+}
 
 /*-----------------------------------------------------------------------------------------  */
 /* ----------------------Reset, body, container börjar här---------------------------------- */
@@ -196,14 +275,14 @@ h4 {
   flex-flow: row wrap;
 }
 
-/* @media screen and (max-width: 600px)  {
+@media screen and (max-width: 600px)  {
   .collection {
-    display: grid;
     grid-area: content;
-    grid-template-columns: auto auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 
   }
-} */
+}
 
 
 
@@ -216,7 +295,7 @@ footer {
 
 
 
-.monster {
+/* .monster {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -231,15 +310,9 @@ footer {
   border-radius: 10px 60px 10px 60px;
   box-shadow: rgb(124, 124, 124) 5px 5px 10px;
   text-align: left;
-}
+} */
 
-@media screen and (max-width: 600px)  {
 
-  .monster {
-    /* width: 50vw; */
-  }
-
-}
 
 
 
@@ -346,7 +419,7 @@ img {
 }
 
 
-.edit-button, .confirm-button, .cancel-button, .remove-button {
+.edit-button, .confirm-button, .cancel-button, .remove-button, #alertButton {
     background-color: #EDF5FC;
     color:#2A3439;
     background-image: linear-gradient(170deg,
@@ -369,9 +442,14 @@ img {
     padding-right: 10px;
 }
 
-.edit-button:hover, .confirm-button:hover, .cancel-button:hover, .remove-button:hover {
+.edit-button:hover, .confirm-button:hover, .cancel-button:hover, .remove-button:hover, #alertButton:hover  {
     background-position: 20% 20%;
    
+}
+
+.edit-button:active, .confirm-button:active, .cancel-button:active, .remove-button:active, #alertButton:active {
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
+  
 }
 
 
