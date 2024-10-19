@@ -50,16 +50,15 @@ function closeDialog() {
 // Funktion som renderar dynamiska monsterkort.
 // ===========================================
 
-const renderMonsterCard = () => {
+//Låter renderMonsterCard ta emot lista av monster för filtering av färg och typ. Skickas ingen lista så används hela state.collection. 
+const renderMonsterCard = (monstersToRender = state.collection) => {
 
-
-    // Tömmer section class="collection"
+    // Tömmer section class="collection" innan ny rendering
     const monsterSection = document.querySelector(".collection");
     monsterSection.innerHTML = "";
 
-    // loopar igenom state.collection för att skapa monster-kort av innehållet
-    state.collection.forEach(object => {
-
+    // Loopar igenom den angivna arrayen för att skapa monsterkort
+    monstersToRender.forEach(object => {
         // Skapar ny article-tag
         const monster = document.createElement("article");
         monster.className = "monster";
@@ -114,13 +113,11 @@ const renderMonsterCard = () => {
         // Skapar radernas innehåll
         addRow("Color", object.color);
         addRow("Type", object.type);
-        i = 0;
+
+        let i = 0;
         for (element of monsterAttributes) {
-
             addRow("Number of " + [element], object[element]);
-
             i++;
-
         }
 
 
@@ -195,10 +192,13 @@ const renderMonsterCard = () => {
 
 
 
+
+
+
             // EVENT: Confirm
             confirmButton.addEventListener('click', (e) => {
                 e.preventDefault();
-                
+
 
                 // Hittar rätt objekt att uppdatera med nya värden
                 const monsterIndex = state.collection.findIndex(monster => monster.name === `${object.name}`);
@@ -280,10 +280,29 @@ const renderMonsterCard = () => {
     })
 }
 
+
+//Tar emot färg eller typ och lägger in istället för Null, om inget värde så blir värdet null så färg eller typ kommer bli null.
+const filterMonsters = (filterColor = null, filterType = null) => {
+    //Här kollar vi filterMonsters och kollar igenom state.collection. Vi använder filter metoden. Vi skapar en ny array på de med samma färg som vi angav med filterMonsters. 
+    const filteredMonsters = state.collection.filter(monster => {
+        //Kollar igenom monstrenas färger i state.collection och matchar mot sökt färg, finns färgen = true. om ingen färg är sökt så blir värde true för att alla färger är okej. Samma gäller type. 
+        const matchesColor = filterColor ? monster.color === filterColor : true;
+        const matchesType = filterType ? monster.type === filterType : true;
+        //True i vår app = 1 typ eller färg som vi söker efter finns i state.collection och den andra blir true då inget var varlt för denna. Dessa objekt får visas. 
+        //Väljer blå - Då får alla blåa visas men också alla typer som har färgen blå i. 
+        return matchesColor && matchesType;
+    });
+    renderMonsterCard(filteredMonsters);  // Skicka den filtrerade listan till render
+};
+
 // ========LÄGGER IN ARRAYS I FORMULÄR========
 // Hämtar arrays och lägger in i rullistor.
 // ===========================================
 window.addEventListener("load", (event) => {
+
+
+    updateCounts();       // Uppdatera räkningen av färger och typer baserat på initial state.collection
+
     i = 0;
     const colors = document.getElementById("monster-Colors");
     for (const element of monsterColors) {
@@ -326,7 +345,7 @@ window.addEventListener("load", (event) => {
 
         i++;
     }
-    
+
 });
 
 // ================FORM RULES================
@@ -404,6 +423,8 @@ document.getElementById("form-button").addEventListener("click", () => {
 
     pushMonsters();
 
+    updateCounts();
+
     renderMonsterCard();
 
 
@@ -413,30 +434,36 @@ document.getElementById("form-button").addEventListener("click", () => {
 });
 
 
+renderMonsterCard();
 
-
-// Skapa arrays för räkning av färger och typer av monster - Detta används senare i skapande av knappar
-
+// Skapa arrays för räkning av färger och typer av monster - Detta används senare i skapande av knappar - arrayerna är lika långa som arrayerna för typ och färg och fyller arrayerna med 0:or
 const colorCount = new Array(monsterColors.length).fill(0);  // Initierar med 0
 const typeCount = new Array(monsterTypes.length).fill(0);    // Initierar med 0
 
-// Loopa igenom collection-arrayen för att jämföra index från arrayer "monsterColors och monsterTypes" 
-// om samma index = Samma färg och lägg till i counter array för att skickas till korten när dem skapas
-state.collection.forEach(monster => {
-    const colorIndex = monsterColors.indexOf(monster.color);
-    const typeIndex = monsterTypes.indexOf(monster.type);
+function updateCounts() {
 
-    // Om index inte är -1, plussa på en. Detta för färg. -1 = färg finns inte i array och är felaktig och räknas då inte. 
-    if (colorIndex !== -1) {
-        colorCount[colorIndex]++;
-    }
+    //Återställer räknarna. 
+    colorCount.fill(0);
+    typeCount.fill(0);
 
-    if (typeIndex !== -1) {
-        typeCount[typeIndex]++;
-    }
-});
+    // Loopa igenom collection-arrayen för att jämföra index från arrayer "monsterColors och monsterTypes" 
+    // om samma index = Samma färg och lägg till i counter array för att skickas till korten när dem skapas
+    state.collection.forEach(monster => {
+        const colorIndex = monsterColors.indexOf(monster.color);
+        const typeIndex = monsterTypes.indexOf(monster.type);
 
+        // Om index inte är -1, plussa på en. -1 = färg/typ finns inte i array och är felaktig och räknas då inte.
+        if (colorIndex !== -1) {
+            colorCount[colorIndex]++;
+        }
 
+        if (typeIndex !== -1) {
+            typeCount[typeIndex]++;
+        }
+    });
+
+    updateFilterButtons();
+}
 
 
 // Skapa knappar för varje färg och inkludera räkningen från colorCount igenom att hålla reda på index. 
@@ -447,48 +474,52 @@ let resetButton; // Reset-knappen definieras globalt
 const filterContainer = document.querySelector(".filter-container");
 const filterContainerColor = document.querySelector(".filters-color");
 const filterContainerType = document.querySelector(".filters-monster");
+function updateFilterButtons() {
+    //rensa tidigare knappar - Detta då filtering sker hela tiden
+    filterContainerColor.innerHTML = "";
+    filterContainerType.innerHTML = "";
+    // Skapa filterknappar för färger
+    monsterColors.forEach((color, index) => {
+        //Skapar elementet "Button"
+        const filterButtonColor = document.createElement("button");
+        //Ger knappen ett klassnamn - "Filter-button"
+        filterButtonColor.className = "filter-button";
+        //Bestämmer att "FilterbuttonType" ska bli typen "Button"
+        filterButtonColor.type = "button";
 
-// Skapa filterknappar för färger
-monsterColors.forEach((color, index) => {
-    //Skapar elementet "Button"
-    const filterButtonColor = document.createElement("button");
-    //Ger knappen ett klassnamn - "Filter-button"
-    filterButtonColor.className = "filter-button";
-    //Bestämmer att "FilterbuttonColor" ska bli typen "Button"
-    filterButtonColor.type = "button";
-    
-    // Texten på knappen visar färgen och antal monster som matchar
-    filterButtonColor.innerHTML = `${color} (${colorCount[index]})`;
+        // Texten på knappen visar färgen och antal monster som matchar
+        filterButtonColor.innerHTML = `${color} (${colorCount[index]})`;
 
-    // knappen jag har skapat nu sätter jag som barn till "filters-color" classen i index.html
-    filterContainerColor.appendChild(filterButtonColor);
+        // knappen jag har skapat nu sätter jag som barn till "filters-color" classen i index.html
+        filterContainerColor.appendChild(filterButtonColor);
 
-    // Lägg till en event listener för när användaren klickar på en färg filter knapp
-    filterButtonColor.addEventListener("click", () => {
-        // Kallar på renderMonsterCard som då endast visar färg som är klickad på då färg är definerad tidigare i innerHTML.
-        renderMonsterCard(color);  
+        // Lägg till en event listener för när användaren klickar på en färg filter knapp
+        filterButtonColor.addEventListener("click", () => {
+            // Kallar på filterMOnsters som då endast visar färg som är klickad på då färg är definerad tidigare i forEach lopen.
+            filterMonsters(color, null);
 
-        //Kallar på en funktion som skapar en reset-filter knapp och som sedan tar bort den om den används. Check för ifall knapp redan finns, finns i global. 
-        createResetButton();
+            //Kallar på en funktion som skapar en reset-filter knapp och som sedan tar bort den om den används. Check för ifall knapp redan finns, finns i global. 
+            createResetButton();
+        });
     });
 
-});
+};
 
 //Repeat från color fast till monster typ istället. 
 monsterTypes.forEach((type, index) => {
     const filterButtonType = document.createElement("button");
     filterButtonType.className = "filter-button";
     filterButtonType.type = "button";
-
     filterButtonType.innerHTML = `${type} (${typeCount[index]})`;
 
     filterContainerType.appendChild(filterButtonType);
 
     filterButtonType.addEventListener("click", () => {
-        renderMonsterCard(null, type); 
+        filterMonsters(null, type);
         createResetButton();
     });
 });
+
 
 // Funktion för att skapa och hantera reset-knappen
 function createResetButton() {
