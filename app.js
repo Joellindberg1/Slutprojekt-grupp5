@@ -390,6 +390,8 @@ function pushMonsters() {
 };
 
 
+
+
 // ==============APP STARTAR HÄR==============
 
 // Arrays som lagrar möjliga färger och typer för monster
@@ -435,6 +437,9 @@ document.getElementById("form-button").addEventListener("click", () => {
 
 
 renderMonsterCard();
+
+
+
 
 // Skapa arrays för räkning av färger och typer av monster - Detta används senare i skapande av knappar - arrayerna är lika långa som arrayerna för typ och färg och fyller arrayerna med 0:or
 const colorCount = new Array(monsterColors.length).fill(0);  // Initierar med 0
@@ -503,22 +508,23 @@ function updateFilterButtons() {
         });
     });
 
-};
 
-//Repeat från color fast till monster typ istället. 
-monsterTypes.forEach((type, index) => {
-    const filterButtonType = document.createElement("button");
-    filterButtonType.className = "filter-button";
-    filterButtonType.type = "button";
-    filterButtonType.innerHTML = `${type} (${typeCount[index]})`;
 
-    filterContainerType.appendChild(filterButtonType);
+    //Repeat från color fast till monster typ istället. 
+    monsterTypes.forEach((type, index) => {
+        const filterButtonType = document.createElement("button");
+        filterButtonType.className = "filter-button";
+        filterButtonType.type = "button";
+        filterButtonType.innerHTML = `${type} (${typeCount[index]})`;
 
-    filterButtonType.addEventListener("click", () => {
-        filterMonsters(null, type);
-        createResetButton();
+        filterContainerType.appendChild(filterButtonType);
+
+        filterButtonType.addEventListener("click", () => {
+            filterMonsters(null, type);
+            createResetButton();
+        });
     });
-});
+};
 
 
 // Funktion för att skapa och hantera reset-knappen

@@ -14,7 +14,60 @@
 /*@media (min-width:1281px) { /* hi-res laptops and desktops } */
 
 @media screen and (max-width: 600px) {
-  /* FLIP CARDS */
+
+
+  .form-container {
+    grid-area: form;
+    width: 100vw;
+    display: grid;
+    display: flex;
+    grid-template-columns: 1fr;
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(
+      140deg,
+      rgba(137, 130, 141, 1) 0%,
+      rgba(163, 155, 168, 1) 35%,
+      rgba(208, 197, 215, 1) 100%
+    );
+    padding: 2rem;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  #add-monster-form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100vw;
+    height: 85vh;
+    
+    
+    label, input, select {
+      padding: 10px;
+      font-size: 18px;
+    }
+
+    label {
+      padding-top: 20px;
+    }
+  }
+  #form-button {
+    padding: 2px;
+    margin: 2px;
+    margin-top: 10px;
+    border: 2px solid rgba(137, 130, 141, 1);
+    border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
+    height: 250px;
+    font-size: 18px;
+  }
+
+  .database {
+    grid-area: database;
+  }
+
   .monster {
     display: flex;
     flex-direction: column;
@@ -24,11 +77,11 @@
     background-color: transparent;
     min-height: 200px;
     border: 1px solid #f1f1f1;
-    perspective: 1000px; /* Remove this if you don't want the 3D effect */
+    perspective: 1000px;
     margin: 10px;
   }
 
-  /* This container is needed to position the front and back side */
+
   .monster-inner {
     position: relative;
     width: 100%;
@@ -38,22 +91,22 @@
     transform-style: preserve-3d;
   }
 
-  /* Do an horizontal flip when you move the mouse over the flip box container */
+ 
   .monster:hover .monster-inner {
     transform: rotateX(180deg);
   }
 
-  /* Position the front and back side */
+
   .monster-front,
   .monster-back {
     position: absolute;
     width: 100%;
     height: 100%;
-    -webkit-backface-visibility: hidden; /* Safari */
+    -webkit-backface-visibility: hidden; 
     backface-visibility: hidden;
   }
 
-  /* Style the front side (fallback if image is missing) */
+
   .monster-front {
     border-radius: 10px 60px 10px 60px;
     background: linear-gradient(
@@ -66,7 +119,7 @@
     box-shadow: rgb(124, 124, 124) 5px 5px 10px;
   }
 
-  /* Style the back side */
+
   .monster-back {
     display: flex;
     flex-direction: column;
@@ -89,6 +142,7 @@
     font-size: x-large;
     margin: 5px;
   }
+  
 }
 
 /*-----------------------------------------------------------------------------------------  */
@@ -118,7 +172,7 @@ body {
   /*KOlla på höger aside*/
   grid-template-areas:
     "topbar topbar topbar"
-    "left content database"
+    "form content database"
     "footer footer footer";
 }
 
@@ -127,13 +181,14 @@ body {
     display: grid;
     min-height: 100%;
     width: 100vw;
-    grid-template-rows: auto auto auto auto;
-    grid-template-columns: auto auto;
+    /* grid-template-rows: auto auto auto auto; */
+    grid-template-columns: auto;
     grid-template-areas:
-      "topbar topbar"
-      "left database"
-      "content content"
-      "footer footer";
+      "topbar"
+      "form"
+      "database"
+      "content"
+      "footer";
   }
 }
 
@@ -178,13 +233,6 @@ aside {
   border: 1px solid #ddd;
 }
 
-@media screen and (max-width: 600px) {
-  aside {
-    grid-area: database;
-    width: 1fr;
-    height: 50px;
-  }
-}
 
 /* :Hover ger asiden andra attribute när man hovrar den och den växer också till bestämd bredd.  */
 aside:hover {
@@ -298,23 +346,25 @@ footer {
   height: 5vh;
 }
 
-.monster {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: linear-gradient(
-    140deg,
-    rgba(137, 130, 141, 1) 0%,
-    rgba(163, 155, 168, 1) 35%,
-    rgba(208, 197, 215, 1) 100%
-  );
-  width: 300px;
-  height: fit-content;
-  margin: 20px;
-  padding: 20px;
-  border-radius: 10px 60px 10px 60px;
-  box-shadow: rgb(124, 124, 124) 5px 5px 10px;
-  text-align: left;
+@media screen and (min-width: 601px) {
+  .monster {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(
+      140deg,
+      rgba(137, 130, 141, 1) 0%,
+      rgba(163, 155, 168, 1) 35%,
+      rgba(208, 197, 215, 1) 100%
+    );
+    width: 300px;
+    height: fit-content;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px 60px 10px 60px;
+    box-shadow: rgb(124, 124, 124) 5px 5px 10px;
+
+  }
 }
 
 table {
@@ -331,8 +381,13 @@ h4 {
 }
 
 tr {
-  padding: 0%;
+  text-align: left;
 }
+
+td {
+  text-align: right;
+}
+
 
 a {
   display: flex;
@@ -345,33 +400,35 @@ img {
   max-inline-size: 30%;
 }
 
-.form-container {
-  grid-area: left;
-  display: grid;
-  grid-template-columns: repeat(auto, 1fr);
-  flex-direction: column;
-  justify-content: space-between;
-  background: linear-gradient(
-    140deg,
-    rgba(137, 130, 141, 1) 0%,
-    rgba(163, 155, 168, 1) 35%,
-    rgba(208, 197, 215, 1) 100%
-  );
-  width: fit-content;
-  height: fit-content;
-  margin: 1rem;
-  padding: 2rem;
-  border-radius: 20px;
-  box-shadow: rgb(124, 124, 124) 5px 5px 10px;
-  text-align: center;
-  font-weight: bold;
-  border-collapse: collapse;
-  border: 1px solid #ddd;
+@media screen and (min-width: 601px) {
+  .form-container {
+    grid-area: form;
+    display: grid;
+    grid-template-columns: repeat(auto, 1fr);
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(
+      140deg,
+      rgba(137, 130, 141, 1) 0%,
+      rgba(163, 155, 168, 1) 35%,
+      rgba(208, 197, 215, 1) 100%
+    );
+    width: fit-content;
+    height: fit-content;
+    margin: 1rem;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: rgb(124, 124, 124) 5px 5px 10px;
+    text-align: center;
+    font-weight: bold;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+  }
 }
 
-#add-monster-form {
+/* #add-monster-form {
   display: grid;
-}
+} */
 
 #form-button {
   padding: 2;
