@@ -69,13 +69,12 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
         monsterInner.className = "monster-inner";
         monster.appendChild(monsterInner);
 
-        const monsterFront = document.createElement("div");
-        monsterFront.className = "monster-front";
-        monsterInner.appendChild(monsterFront);
-
         const monsterBack = document.createElement("div");
         monsterBack.className = "monster-back";
         monsterInner.appendChild(monsterBack);
+
+
+
 
 
         // Skapar tabell till den nyskapade article-tag'en
@@ -83,12 +82,15 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
         table.className = object.name.replaceAll(" ", '-') + "-table";
         monsterBack.appendChild(table);
 
-        // const caption = document.createElement("caption");
-        // table.appendChild(caption);
+
+
+
+        const caption = document.createElement("caption");
+        table.appendChild(caption);
 
         const h3 = document.createElement("h3");
         h3.innerHTML = object.name;
-        monsterFront.appendChild(h3);
+        caption.appendChild(h3);
 
 
         // Stödfunktion för att skapa rader i tabellen
@@ -100,6 +102,7 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
             const th = document.createElement("th");
             th.scope = "row";
             th.innerHTML = `${label}: `;
+            // th.id = object.name + "-th-" + label.replaceAll(" ", '-');
             row.appendChild(th);
 
             const td = document.createElement("td");
@@ -121,6 +124,8 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
         }
 
 
+
+
         // Skapar knapp-container
         const cardButtonContainer = document.createElement('div');
         cardButtonContainer.className = "card-button-container";
@@ -134,6 +139,10 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
         cardButtonContainer.appendChild(editButton);
         monsterBack.appendChild(cardButtonContainer);
 
+
+        const monsterFront = monsterBack.cloneNode(true);
+        monsterFront.className = "monster-front";
+        monsterInner.appendChild(monsterFront);
         // EVENT: Edit
         editButton.addEventListener('click', (e) => {
             e.preventDefault();
@@ -149,12 +158,17 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
             for (let element of monsterAttributes) {
 
                 const td = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
+                // const th = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
 
                 if (td.id !== `${object.name}-color` || `${object.name}-type`) {
                     const editInput = document.createElement('input');
                     editInput.value = td.textContent;
                     editInput.id = td.id;
                     editInput.type = "number";
+                    // const editLabel = document.createElement('label');
+                    // editLabel.innerHTML = th.innerHTML;
+                    // editLabel.setAttribute('for', editInput.id);
+                    // td.parentNode.replaceChild(editLabel, th);
                     td.parentNode.replaceChild(editInput, td);
                 }
             }
@@ -277,7 +291,10 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
 
         })
         monsterSection.appendChild(monster);
+
     })
+
+
 }
 
 
@@ -389,6 +406,35 @@ function pushMonsters() {
 
 };
 
+// ================FULLSCREEN=================
+// Gör så element täcker hela skärmen
+// ===========================================
+
+
+// let formFullscreen = document.getElementsByClassName("form-container").addEventListener("click", function () {
+//     toggleFullscreen(this);
+// });
+
+// // Database
+// let databaseFullscreen = document.getElementsByClassName("database").addEventListener("click", function () {
+//     toggleFullscreen(this);
+// });
+
+// // Monster card
+// let monsterCardFullscreen = document.getElementById(${ object.name } - Number - of - ${ element.replaceAll(" ", '-') }).addEventListener("click", function () {
+//     toggleFullscreen(this);
+// });
+
+// function toggleFullscreen(element) {
+//     if (element.classList.contains('fullscren')) {
+//         element.classList.remove("fullscreen");
+//     } else {
+//         document.querySelectorAll('.fullscreen').forEach(el => el.classList.remove('fullscreen'));
+
+//         element.classList.add('fullscreen');
+//     }
+// }
+
 
 
 
@@ -407,12 +453,12 @@ const values = [];
 
 const state = {
     collection: [
-        { name: "Grimblot", color: monsterColors[1], type: monsterTypes[1], },
-        { name: "Zarok", color: monsterColors[0], type: monsterTypes[0], },
-        { name: "Blisterfang", color: monsterColors[1], type: monsterTypes[1], },
-        { name: "Thraxxis", color: monsterColors[2], type: monsterTypes[2], },
-        { name: "Murkspawn", color: monsterColors[3], type: monsterTypes[0], },
-        { name: "Vorrgath", color: monsterColors[4], type: monsterTypes[1], },
+        { name: "Grimblot", type: monsterTypes[1], color: monsterColors[1], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
+        { name: "Zarok", type: monsterTypes[0], color: monsterColors[0], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
+        { name: "Blisterfang", type: monsterTypes[1], color: monsterColors[1], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
+        { name: "Thraxxis", type: monsterTypes[2], color: monsterColors[2], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
+        { name: "Murkspawn", type: monsterTypes[0], color: monsterColors[3], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
+        { name: "Vorrgath", type: monsterTypes[1], color: monsterColors[4], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
 
     ],
 };
