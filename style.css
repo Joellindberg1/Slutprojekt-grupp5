@@ -14,153 +14,6 @@
 /*@media (min-width:1281px) { /* hi-res laptops and desktops } */
 
 @media screen and (max-width: 600px) {
-
-
-  .form-container {
-    grid-area: form;
-    width: 100vw;
-    display: grid;
-    display: flex;
-    
-    grid-template-columns: 1fr;
-    flex-direction: column;
-    /* justify-content: space-between; */
-    justify-content: center;
-    background: linear-gradient(
-      140deg,
-      rgba(137, 130, 141, 1) 0%,
-      rgba(163, 155, 168, 1) 35%,
-      rgba(208, 197, 215, 1) 100%
-    );
-    /* padding: 2rem; */
-    
-    text-align: center;
-    font-weight: bold;
-  }
-  
-  #add-monster-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-self: center;
-    display: grid;
-    grid-template-columns: 1fr;
-    width: 80vw;
-    height: 85vh;
-    
-    
-    label, input, select {
-      width: 80vw;
-      padding: 10px;
-      font-size: 18px;
-    }
-
-    option {
-      max-width: 80vw;
-    }
-
-    label {
-      padding-top: 20px;
-    }
-  }
-
-  #form-button {
-    padding: 2px;
-    margin: 2px;
-    margin-top: 10px;
-    border: 2px solid rgba(137, 130, 141, 1);
-    border-radius: 20px;
-    text-align: center;
-    cursor: pointer;
-    height: 250px;
-    font-size: 18px;
-  }
-
-  .database {
-    grid-area: database;
-    width: 100vw;
-    display: grid;
-    display: flex;
-    grid-template-columns: 1fr;
-    flex-direction: column;
-    justify-content: space-between;
-    background: linear-gradient(
-      140deg,
-      rgba(137, 130, 141, 1) 0%,
-      rgba(163, 155, 168, 1) 35%,
-      rgba(208, 197, 215, 1) 100%
-    );
-    /* padding: 2rem; */
-    text-align: center;
-    font-weight: bold;
-    font-size: 18px;
-
-    aside {
-    grid-area: database;
-    background: linear-gradient(
-      140deg,
-      rgba(137, 130, 141, 1) 0%,
-      rgba(163, 155, 168, 1) 35%,
-      rgba(208, 197, 215, 1) 100%
-    );
-    width: 100vw;
-    height: 85vh;
-    }
-
-    .filter-container {
-      /* startar grid layout för barnen i filter-container */
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto auto auto auto;
-      gap: 10px;
-      justify-content: space-between;
-      margin-inline: 2rem;
-
-    }
-
-    .filters-color,
-    .filters-monster {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(120px, 1fr));
-      gap: 10px;
-    }
-
-    .reset-filter-container {
-      display: grid;
-      grid-column: 1 / -1; /* Centrera knappen över hela bredden */
-    }
-
-    .reset-filter-button {
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    h4 {
-      grid-column: 1 / -1; /* Centrera knappen över hela bredden */
-      margin: 10px 0; /* Avstånd ovanför och nedanför rubrikerna */
-      text-align: center; /* Centrera texten */
-    }
-
-    .filter-button,
-    .reset-filter-button {
-      background-color: white; /* Vit bakgrund för knapparna */
-      border: 2px solid rgba(116, 79, 198, 1); /* Ljusgrå kant */
-      border-radius: 20px; /* Rundade kanter */
-      padding: 10px; /* Utrymme inuti knappen */
-      font-size: 18px; /* Textstorlek */
-      cursor: pointer; /* Pekar muspekaren */
-      transition: background-color 0.5s, color 0.5s; /* Mjuk övergång */
-      min-height: 50px; /* Minimum höjd för knapparna */
-      text-align: center; /* Centrera texten i knapparna */
-    }
-
-    /* Hover-effekt */
-    .filter-button:hover,
-    .reset-filter-button:hover {
-      background-color: #dfd2d2; /* Ljusgrå bakgrund vid hover */
-    }
-  }
-
   .monster {
     width: 1fr;
     background-color: transparent;
@@ -327,6 +180,90 @@ header {
 /*-----------------------------------------------------------------------------------------  */
 /* ------------------------------Aside börjar här------------------------------------------- */
 /*-----------------------------------------------------------------------------------------  */
+@media screen and (max-width: 600px) {
+  aside {
+    grid-area: database;
+    width: 100vw;
+    height: 35px;
+    overflow: hidden;
+    display: grid;
+    display: flex;
+    grid-template-columns: 1fr;
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(
+      140deg,
+      rgba(137, 130, 141, 1) 0%,
+      rgba(163, 155, 168, 1) 35%,
+      rgba(208, 197, 215, 1) 100%
+    );
+    /* padding: 2rem; */
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  /* Skapa en klass för när asiden är expanderad */
+aside.expanded {
+  height: fit-content; /* Expanderar till sin fulla storlek */
+  /* Du kan också lägga till andra regler här om du vill ändra stilen när den är öppen */
+}
+
+
+    .filter-container {
+      /* startar grid layout för barnen i filter-container */
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto auto;
+      gap: 10px;
+      justify-content: space-between;
+      margin-inline: 2rem;
+
+    }
+
+    .filters-color,
+    .filters-monster {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .reset-filter-container {
+      display: grid;
+      grid-column: 1 / -1; /* Centrera knappen över hela bredden */
+    }
+
+    .reset-filter-button {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    h4 {
+      grid-column: 1 / -1; /* Centrera knappen över hela bredden */
+      margin: 10px 0; /* Avstånd ovanför och nedanför rubrikerna */
+      text-align: center; /* Centrera texten */
+    }
+
+    .filter-button,
+    .reset-filter-button {
+      background-color: white; /* Vit bakgrund för knapparna */
+      border: 2px solid rgba(116, 79, 198, 1); /* Ljusgrå kant */
+      border-radius: 20px; /* Rundade kanter */
+      padding: 10px; /* Utrymme inuti knappen */
+      font-size: 18px; /* Textstorlek */
+      cursor: pointer; /* Pekar muspekaren */
+      transition: background-color 0.5s, color 0.5s; /* Mjuk övergång */
+      min-height: 50px; /* Minimum höjd för knapparna */
+      text-align: center; /* Centrera texten i knapparna */
+    }
+
+    /* Hover-effekt */
+    .filter-button:hover,
+    .reset-filter-button:hover {
+      background-color: #dfd2d2; /* Ljusgrå bakgrund vid hover */
+    }
+  }
+
 
 @media screen and (min-width: 601px) {
 /* Sido-menyn för filter / statistik. 
@@ -604,6 +541,7 @@ img {
   max-inline-size: 30%;
 }
 
+
 @media screen and (min-width: 601px) {
   .form-container {
     grid-area: form;
@@ -628,6 +566,36 @@ img {
     border-collapse: collapse;
     border: 1px solid #ddd;
   }
+}
+
+@media screen and (max-width: 600px) {
+  .form-container {
+    grid-area: form;
+    width: 100vw;
+    height: 35px;
+    overflow: hidden;
+    display: grid;
+    display: flex;
+    
+    grid-template-columns: 1fr;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    /* justify-content: center; */
+    background: linear-gradient(
+      140deg,
+      rgba(137, 130, 141, 1) 0%,
+      rgba(163, 155, 168, 1) 35%,
+      rgba(208, 197, 215, 1) 100%
+    );
+    /* padding: 2rem; */
+    
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+.form-container.expanded {
+  height: fit-content; /* Justera denna höjd efter behov */
 }
 
 #add-monster-form {

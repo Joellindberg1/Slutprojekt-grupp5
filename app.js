@@ -202,6 +202,8 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
             removeMonsterButton.type = "button";
             removeMonsterButton.innerHTML = '"Remove" monster';
             cardButtonContainer.appendChild(removeMonsterButton);
+            
+        
 
 
 
@@ -283,6 +285,7 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
                 cardButtonContainer.removeChild(cancelButton);
                 cardButtonContainer.removeChild(removeMonsterButton);
 
+                updateCounts();
                 renderMonsterCard();
 
                 customAlert();
@@ -405,6 +408,51 @@ function pushMonsters() {
 
 
 };
+
+//Aside toggel för app
+// Hämta asiden och knapparna
+const aside = document.querySelector('aside');
+
+// Lägg till ett event som expanderar asiden när du klickar på den
+aside.addEventListener('click', (event) => {
+  // Kolla om klicket kommer från en specifik knapp eller annat innehåll i asiden
+  if (event.target.closest('.filter-button') || event.target.closest('.reset-filter-button')) {
+    // Om det är en knapp, förhindra att asiden stängs
+    event.stopPropagation();
+    return; // Gör ingenting om det är en knapp
+  }
+
+  // Toggla aside för att öppna/stänga den
+  aside.classList.toggle('expanded');
+});
+
+// Om användaren klickar utanför asiden, stäng den
+document.addEventListener('click', (event) => {
+  if (!aside.contains(event.target) && aside.classList.contains('expanded')) {
+    aside.classList.remove('expanded');
+  }
+});
+
+
+// form toggel för app
+// Hämta form-container
+const formContainer = document.querySelector('.form-container');
+
+// Klick-händelse för att expandera/kollapsa när man klickar på H4
+document.querySelector('.H4-form').addEventListener('click', () => {
+    formContainer.classList.toggle('expanded');
+});
+
+// Funktion för att stänga formuläret om användaren klickar utanför
+document.addEventListener('click', (event) => {
+    // Kontrollera om klicket var utanför form-container eller dess barn
+    if (!formContainer.contains(event.target)) {
+        formContainer.classList.remove('expanded');
+    }
+});
+
+
+
 
 // ================FULLSCREEN=================
 // Gör så element täcker hela skärmen
@@ -604,4 +652,4 @@ function createResetButton() {
 
 
 renderMonsterCard();
-
+    
