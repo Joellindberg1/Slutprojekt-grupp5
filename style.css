@@ -162,12 +162,20 @@
   }
 
   .monster {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* width: 100%; */
+    width: 40vw;
+    height: fit-content;
+    /* margin: 20px; */
+    /* padding: 20px; */
+    color: #EDF5FC;
+    text-shadow: 2px 3px 4px rgba(0, 0, 0, 0.8);
     width: 1fr;
     background-color: transparent;
-    height: 355px;
-    border: 1px solid #f1f1f1;
     perspective: 1000px;
-    margin: 10px;
+    
   }
 
 
@@ -175,9 +183,10 @@
     position: relative;
     width: 100%;
     height: 100%;
-    /* text-align: center; */
     transition: transform 0.8s;
     transform-style: preserve-3d;
+
+    
 
     tr {
       display: grid;
@@ -210,53 +219,125 @@
     min-height: fit-content;
     -webkit-backface-visibility: hidden; 
     backface-visibility: hidden;
+    
   }
 
 
   .monster-front {
     border-radius: 5px 30px 5px 30px;
-    background: linear-gradient(
-      140deg,
-      rgba(137, 130, 141, 1) 0%,
-      rgba(163, 155, 168, 1) 35%,
-      rgba(208, 197, 215, 1) 100%
-    );
-    color: black;
-    box-shadow: rgb(124, 124, 124) 5px 5px 10px;
+    outline: 5px inset #edf5fc73;
+    background-color: rgba(116, 79, 198, 0.05);
+    backdrop-filter: blur(3px);
+    box-shadow: 
+    0px 10px 15px 10px rgba(0, 0, 0, 0.15),
+    2px 4px 6px rgba(0, 0, 0, 0.2),
+    4px 8px 12px rgba(0, 0, 0, 0.3);
+    filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.3));
+
+    table {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 90%;
+      
+      margin-top: 15%;
+      margin-left: 5%;
+    }
+    tr {
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+    }
+
+    caption {
+      font-size: 50%;
+      text-transform: uppercase;
+      margin-bottom: 25%;
+    }
+
+
+    td {
+      display: none;
+    }
+
+    th {
+      text-align: left;
+      display: none;
+    }
+    
   }
+
+  
 
 
 
   .monster-back {
     border-radius: 30px 5px 30px 5px;
-    box-shadow: rgb(124, 124, 124) 5px 5px 10px;
-    background: linear-gradient(
-      170deg,
-      rgba(63, 43, 109, 1) 0%,
-      rgba(116, 79, 198, 1) 35%,
-      rgba(155, 114, 246, 1) 100%
-    );
-    color: #EDF5FC;
+    outline: 5px inset #edf5fc73;
+    background-color: rgba(116, 79, 198, 0.05);
+    backdrop-filter: blur(3px);
+    box-shadow: 
+    0px 10px 15px 10px rgba(0, 0, 0, 0.15),
+    2px 4px 6px rgba(0, 0, 0, 0.2),
+    4px 8px 12px rgba(0, 0, 0, 0.3);
+    filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.3));
     transform: rotateY(180deg);
+    display: grid;
+    grid-template-areas: 
+    "Attributes"
+    "Buttons";
+    display: flex;
+    flex-direction: column;
+    font-size: 100%;
+    
+    
+  
+
+    table {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      grid-area: Attributes;
+      width: 90%;
+      font-size: 50%;
+      margin-top: 15%;
+      margin-bottom: 15%;
+      margin-left: 5%;
+    }
+    
+    tr {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    td {
+      text-align: center;
+    }
+    
+    
+    input {
+      text-align: right;
+      font-size: 90%;
+      color: #EDF5FC;
+      width: 2.5rem;
+      height: 1.2rem;
+      border-radius: 20px;
+      background-color: #ffffff1c;
+      backdrop-filter: blur(3px);
+      text-shadow: 2px 3px 4px rgba(0, 0, 0);
+      outline: 2px groove #edf5fc73;
+    }
+
+      th {
+        text-align: left;
+    }
   }
 
   .card-button-container {
+    grid-area: Buttons;
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  h3 {
-    font-size: x-large;
-    margin: 5px;
-  }
-
-  tr {
-  text-align: left;
-  }
-
-td {
-  text-align: right;
   }
   
 }
@@ -269,13 +350,17 @@ td {
   border: 0;
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #272d2d;
+  /* color: #272d2d; */
 }
 
 html,
 body {
-  background-color: #edf5fc;
-  background-color: #edf5fc;
+  background-image: url(https://i.postimg.cc/fRFrdyMJ/Background.webp);
+  background-size: 85%;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 100vw;
   height: 100vh;
 }
@@ -451,19 +536,20 @@ h4 {
   grid-area: content;
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
 }
 
-@media screen and (max-width: 600px) {
+/* @media screen and (max-width: 600px) {
   .collection {
-    /* display: flex;
-    align-items: center; */
+    display: flex;
+    align-items: center;
     grid-area: content;
     display: grid;
     grid-template-columns: auto auto;
     overflow: hidden;
 
   }
-}
+} */
 
 footer {
   grid-area: footer;
@@ -480,8 +566,9 @@ footer {
     height: fit-content;
     margin: 20px;
     padding: 20px;
-    border-radius: 10px 60px 10px 60px;
-
+    color: #EDF5FC;
+    text-shadow: 2px 3px 4px rgba(0, 0, 0, 0.8);
+    
   }
 }
 
@@ -489,9 +576,7 @@ footer {
     width: 1fr;
     background-color: transparent;
     height: 355px;
-    border: 1px solid #f1f1f1;
     perspective: 1000px;
-    margin: 10px;
   }
 
 
@@ -499,24 +584,9 @@ footer {
     position: relative;
     width: 100%;
     height: 100%;
-    /* text-align: center; */
     transition: transform 0.8s;
     transform-style: preserve-3d;
 
-    tr {
-      display: grid;
-      grid-template-areas: "Attribute Value";
-      grid-template-columns: auto 1fr;
-      
-    }
-
-    input {
-      grid-area: Value;
-      text-align: right;
-      width: 100%;
-      height: min-content;
-      
-    }
   }
 
  
@@ -539,58 +609,126 @@ footer {
 
   .monster-front {
     border-radius: 5px 30px 5px 30px;
-    background: linear-gradient(
-      140deg,
-      rgba(137, 130, 141, 1) 0%,
-      rgba(163, 155, 168, 1) 35%,
-      rgba(208, 197, 215, 1) 100%
-    );
-    color: black;
-    box-shadow: rgb(124, 124, 124) 5px 5px 10px;
+    outline: 5px inset #edf5fc73;
+    background-color: rgba(116, 79, 198, 0.05);
+    backdrop-filter: blur(3px);
+    box-shadow: 
+    0px 10px 15px 10px rgba(0, 0, 0, 0.15),
+    2px 4px 6px rgba(0, 0, 0, 0.2),
+    4px 8px 12px rgba(0, 0, 0, 0.3);
+    filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.3));
+    
+  
+    table {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 90%;
+      font-size: 150%;
+      margin-top: 15%;
+      margin-left: 5%;
+    }
+    tr {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    h3 {
+      font-size: 175%;
+      text-transform: uppercase;
+      margin-bottom: 25%;
+    }
+
+
+    td {
+      text-align: right;
+      font-style: italic;
+    }
+
+    th {
+      text-align: left;
+      text-transform: uppercase;
+    }
+
   }
 
 
 
   .monster-back {
     border-radius: 30px 5px 30px 5px;
-    box-shadow: rgb(124, 124, 124) 5px 5px 10px;
-    background: linear-gradient(
-      170deg,
-      rgba(63, 43, 109, 1) 0%,
-      rgba(116, 79, 198, 1) 35%,
-      rgba(155, 114, 246, 1) 100%
-    );
-    color: #EDF5FC;
+    outline: 5px inset #edf5fc73;
+    background-color: rgba(116, 79, 198, 0.05);
+    backdrop-filter: blur(3px);
+    box-shadow: 
+    0px 10px 15px 10px rgba(0, 0, 0, 0.15),
+    2px 4px 6px rgba(0, 0, 0, 0.2),
+    4px 8px 12px rgba(0, 0, 0, 0.3);
+    filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.3));
     transform: rotateY(180deg);
+    display: grid;
+    grid-template-areas: 
+    "Attributes"
+    "Buttons";
+    display: flex;
+    flex-direction: column;
+    
+    
+  
+
+    table {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      grid-area: Attributes;
+      width: 90%;
+      font-size: 130%;
+      margin-top: 15%;
+      margin-bottom: 15%;
+      margin-left: 5%;
+    }
+    
+    tr {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    td {
+      text-align: center;
+    }
+    
+    
+    input {
+      text-align: right;
+      font-size: 90%;
+      color: #EDF5FC;
+      width: 2.5rem;
+      height: 1.2rem;
+      border-radius: 20px;
+      background-color: #ffffff1c;
+      backdrop-filter: blur(3px);
+      text-shadow: 2px 3px 4px rgba(0, 0, 0);
+      outline: 2px groove #edf5fc73;
+    }
+
+      th {
+        text-align: left;
+        
+    }
   }
 
   .card-button-container {
+    grid-area: Buttons;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
 
-table {
-  padding: 5px;
-}
-
-h3 {
-  font-size: xx-large;
-  margin: 5px;
-}
-
 h4 {
   margin-bottom: 5px;
 }
 
-tr {
-  text-align: left;
-}
 
-td {
-  text-align: right;
-}
 
 
 a {
@@ -675,15 +813,38 @@ img {
 .edit-button,
 .confirm-button,
 .cancel-button,
-.remove-button,
+.remove-button {
+  font-size: 16px;
+  font-weight: bolder;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: 20px;
+  color:#EDF5FC;
+  cursor: pointer;
+  transition: background-position 0.5s ease;
+  height: 30px;
+  width: 90%;
+  text-align: center;
+  margin: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #ffffff1c;
+  backdrop-filter: blur(3px);
+  text-shadow: 2px 3px 4px rgba(0, 0, 0);
+  outline: 5px groove #edf5fc73;
+  margin: 3%;
+  
+}
+
 #alertButton {
   background-color: #edf5fc;
-  color: #2a3439;
+  /* color: #2a3439; */
   background-image: linear-gradient(
     170deg,
-    /* rgba(63, 43, 109, 1) 0%, */ rgb(157, 140, 196) 0%,
-    rgb(208, 191, 246) 30%,
-    rgba(237, 245, 252, 1) 100%
+    rgba(63, 43, 109, 1) 0%,
+    rgba(116, 79, 198, 1) 30%,
+    rgb(208, 191, 246) 100%
+    /* rgba(237, 245, 252, 1) 100% */
   );
   background-size: 400% 400%;
   background-position: 100% 100%;
@@ -704,7 +865,8 @@ img {
 .cancel-button:hover,
 .remove-button:hover,
 #alertButton:hover {
-  background-position: 20% 20%;
+  box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.5);
+  transition: box-shadow 0.5s ease;
 }
 
 .edit-button:active,
@@ -715,8 +877,4 @@ img {
   box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
-.card-button-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
+

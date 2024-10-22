@@ -34,9 +34,6 @@ const customAlert = () => {
     });
 };
 
-
-// ===============CLOSE ALERT=================
-
 const alertDiv = document.getElementById("alertDiv");
 function invokeAlert() {
     alertDiv.style.display = "block";
@@ -59,10 +56,12 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
 
     // Loopar igenom den angivna arrayen för att skapa monsterkort
     monstersToRender.forEach(object => {
+
         // Skapar ny article-tag
         const monster = document.createElement("article");
         monster.className = "monster";
         monster.id = object.name.replaceAll(" ", '-');
+
 
         // Tags för att vända kort i mobil
         const monsterInner = document.createElement("div");
@@ -73,20 +72,27 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
         monsterBack.className = "monster-back";
         monsterInner.appendChild(monsterBack);
 
+        const monsterFront = document.createElement("div");
+        // const monsterFront = monsterBack.cloneNode(true);
+        monsterFront.className = "monster-front";
+        monsterInner.appendChild(monsterFront);
 
 
+        // Skapar tabell till baksidan av kortet
+        const tableBack = document.createElement("table");
+        tableBack.className = object.name.replaceAll(" ", '-') + "-table-back";
+        monsterBack.appendChild(tableBack);
 
-
-        // Skapar tabell till den nyskapade article-tag'en
-        const table = document.createElement("table");
-        table.className = object.name.replaceAll(" ", '-') + "-table";
-        monsterBack.appendChild(table);
+        // Skapar tabell till framsidan av kortet
+        const tableFront = document.createElement("table");
+        tableFront.className = object.name.replaceAll(" ", '-') + "-table-front";
+        monsterFront.appendChild(tableFront);
 
 
 
 
         const caption = document.createElement("caption");
-        table.appendChild(caption);
+        tableFront.appendChild(caption);
 
         const h3 = document.createElement("h3");
         h3.innerHTML = object.name;
@@ -96,8 +102,13 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
         // Stödfunktion för att skapa rader i tabellen
         const addRow = (label, value) => {
             const row = document.createElement("tr");
-            row.className = "hide-on-mobile";
-            table.appendChild(row);
+
+
+            if (label === "Color" || label === "Type") {
+                tableFront.appendChild(row);
+            } else {
+                tableBack.appendChild(row);
+            }
 
             const th = document.createElement("th");
             th.scope = "row";
@@ -119,7 +130,9 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
 
         let i = 0;
         for (element of monsterAttributes) {
+
             addRow("Number of " + [element], object[element]);
+
             i++;
         }
 
@@ -140,9 +153,7 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
         monsterBack.appendChild(cardButtonContainer);
 
 
-        const monsterFront = monsterBack.cloneNode(true);
-        monsterFront.className = "monster-front";
-        monsterInner.appendChild(monsterFront);
+
         // EVENT: Edit
         editButton.addEventListener('click', (e) => {
             e.preventDefault();
@@ -453,7 +464,7 @@ const values = [];
 
 const state = {
     collection: [
-        { name: "Grimblot", type: monsterTypes[1], color: monsterColors[1], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
+        { name: "Grimblot", type: monsterTypes[1], color: monsterColors[1], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3, },
         { name: "Zarok", type: monsterTypes[0], color: monsterColors[0], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
         { name: "Blisterfang", type: monsterTypes[1], color: monsterColors[1], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
         { name: "Thraxxis", type: monsterTypes[2], color: monsterColors[2], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
