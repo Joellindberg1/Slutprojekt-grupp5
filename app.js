@@ -61,9 +61,10 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
         const monster = document.createElement("article");
         monster.className = "monster";
         monster.id = object.name.replaceAll(" ", '-');
+        monster.tabIndex = "0";
 
 
-        // Tags för att vända kort i mobil
+        // Tags för att vända kort
         const monsterInner = document.createElement("div");
         monsterInner.className = "monster-inner";
         monster.appendChild(monsterInner);
@@ -465,34 +466,6 @@ document.addEventListener('click', (event) => {
 
 
 
-// ================FULLSCREEN=================
-// Gör så element täcker hela skärmen
-// ===========================================
-
-
-// let formFullscreen = document.getElementsByClassName("form-container").addEventListener("click", function () {
-//     toggleFullscreen(this);
-// });
-
-// // Database
-// let databaseFullscreen = document.getElementsByClassName("database").addEventListener("click", function () {
-//     toggleFullscreen(this);
-// });
-
-// // Monster card
-// let monsterCardFullscreen = document.getElementById(${ object.name } - Number - of - ${ element.replaceAll(" ", '-') }).addEventListener("click", function () {
-//     toggleFullscreen(this);
-// });
-
-// function toggleFullscreen(element) {
-//     if (element.classList.contains('fullscren')) {
-//         element.classList.remove("fullscreen");
-//     } else {
-//         document.querySelectorAll('.fullscreen').forEach(el => el.classList.remove('fullscreen'));
-
-//         element.classList.add('fullscreen');
-//     }
-// }
 
 
 
