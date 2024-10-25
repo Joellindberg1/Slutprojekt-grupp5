@@ -61,7 +61,6 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
         const monster = document.createElement("article");
         monster.className = "monster";
         monster.id = object.name.replaceAll(" ", '-');
-        monster.tabIndex = "0";
 
 
         // Tags för att vända kort
@@ -78,11 +77,16 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
         monsterFront.className = "monster-front";
         monsterInner.appendChild(monsterFront);
 
+        // Skapar en container till back-table för att kunna köra overflow scroll
+        const tableScroll = document.createElement("div");
+        tableScroll.className = "table-scroll";
+        monsterBack.appendChild(tableScroll);
+
 
         // Skapar tabell till baksidan av kortet
         const tableBack = document.createElement("table");
         tableBack.className = object.name.replaceAll(" ", '-') + "-table-back";
-        monsterBack.appendChild(tableBack);
+        tableScroll.appendChild(tableBack);
 
         // Skapar tabell till framsidan av kortet
         const tableFront = document.createElement("table");
@@ -132,7 +136,7 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
         let i = 0;
         for (element of monsterAttributes) {
 
-            addRow("Number of " + [element], object[element]);
+            addRow(`${[element]}`, object[element]);
 
             i++;
         }
@@ -162,15 +166,15 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
             // Lagrar ursprungliga värden för monsterattribut så att de kan återställas ifall användaren klickar på Cancel
             const originalAttributeValues = {};
             for (let element of monsterAttributes) {
-                const td = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
+                const td = document.getElementById(`${object.name}-${element.replaceAll(" ", '-')}`);
                 originalAttributeValues[element] = td.textContent;
             }
 
             // Gör om kortets table till formulär för att redigera
             for (let element of monsterAttributes) {
 
-                const td = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
-                // const th = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
+                const td = document.getElementById(`${object.name}-${element.replaceAll(" ", '-')}`);
+
 
                 if (td.id !== `${object.name}-color` || `${object.name}-type`) {
                     const editInput = document.createElement('input');
@@ -239,7 +243,7 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
 
                     // Loopar igenom attributen och ändrar värdena
                     for (let element of monsterAttributes) {
-                        const editInput = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
+                        const editInput = document.getElementById(`${object.name}-${element.replaceAll(" ", '-')}`);
                         updatedMonster[element] = editInput.value;
                     }
 
@@ -265,7 +269,7 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
                 // Ändrar tillbaka inputs till td i tabellen
                 for (let element of monsterAttributes) {
 
-                    const editInput = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
+                    const editInput = document.getElementById(`${object.name}-${element.replaceAll(" ", '-')}`);
 
                     if (editInput.id !== `${object.name}-color` || `${object.name}-type`) {
                         const td = document.createElement('td');
@@ -305,6 +309,7 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
 
 
         })
+
         monsterSection.appendChild(monster);
 
     })
@@ -331,7 +336,6 @@ const filterMonsters = (filterColor = null, filterType = null) => {
 // Hämtar arrays och lägger in i rullistor.
 // ===========================================
 window.addEventListener("load", (event) => {
-
 
     updateCounts();       // Uppdatera räkningen av färger och typer baserat på initial state.collection
 
@@ -464,7 +468,26 @@ document.addEventListener('click', (event) => {
 });
 
 
+// ==============NUMMER-SLUMPARE===============
+function randomValues() {
+    return Math.floor(Math.random() * 11);
+}
 
+function randomValuesAndAttributes() {
+    return monsterAttributes.reduce((fin, ran) => {
+        fin[ran] = randomValues(ran);
+        return fin;
+    }, {})
+};
+// =============================================
+
+// ===============LAGRAD DATA FÖR DYNAMISKA FUNKTIONER==============
+const monsterColors = ["Blue", "Green", "Red", "Brown", "Purple"];
+const monsterTypes = ["Firemonster", "Skymonster", "Watermonster"];
+const monsterAttributes = ["Eyes", "Arms", "Tentacles", "Horns"]; // OBS! Har man samma attribut två gånger så går det inte redigera det andra då de kommer dela ID.
+
+const allKeys = ["name", "color", "type", ...monsterAttributes];
+const values = [];
 
 
 
@@ -472,25 +495,16 @@ document.addEventListener('click', (event) => {
 
 // ==============APP STARTAR HÄR==============
 
-// Arrays som lagrar möjliga färger och typer för monster
-const monsterColors = ["Blue", "Green", "Red", "Brown", "Purple"];
-const monsterTypes = ["Firemonster", "Skymonster", "Watermonster"];
-const monsterAttributes = ["Eyes", "Arms", "Tentacles", "Horns"];
-
-const allKeys = ["name", "color", "type", ...monsterAttributes];
-const values = [];
-
-
-// State innehåller datan från användarens input samt standardvärdena för appen
-
 const state = {
     collection: [
-        { name: "Grimblot", type: monsterTypes[1], color: monsterColors[1], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3, },
-        { name: "Zarok", type: monsterTypes[0], color: monsterColors[0], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
-        { name: "Blisterfang", type: monsterTypes[1], color: monsterColors[1], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
-        { name: "Thraxxis", type: monsterTypes[2], color: monsterColors[2], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
-        { name: "Murkspawn", type: monsterTypes[0], color: monsterColors[3], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
-        { name: "Vorrgath", type: monsterTypes[1], color: monsterColors[4], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
+        { name: "Grimblot", type: monsterTypes[1], color: monsterColors[1], ...randomValuesAndAttributes() },
+        { name: "Zarok", type: monsterTypes[0], color: monsterColors[0], ...randomValuesAndAttributes() },
+        { name: "Blisterfang", type: monsterTypes[1], color: monsterColors[1], ...randomValuesAndAttributes() },
+        { name: "Thraxxis", type: monsterTypes[2], color: monsterColors[2], ...randomValuesAndAttributes() },
+        { name: "Murkspawn", type: monsterTypes[0], color: monsterColors[3], ...randomValuesAndAttributes() },
+        { name: "Vorrgath", type: monsterTypes[1], color: monsterColors[4], ...randomValuesAndAttributes() },
+        { name: "Gorlax ", type: monsterTypes[2], color: monsterColors[0], ...randomValuesAndAttributes() },
+        { name: "Zephraxis", type: monsterTypes[1], color: monsterColors[4], ...randomValuesAndAttributes() },
 
     ],
 };
