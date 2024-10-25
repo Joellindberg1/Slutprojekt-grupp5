@@ -551,7 +551,7 @@ function randomValuesAndAttributes() {
 // ===============LAGRAD DATA FÖR DYNAMISKA FUNKTIONER==============
 const monsterColors = ["Blue", "Green", "Red", "Brown", "Purple"];
 const monsterTypes = ["Firemonster", "Skymonster", "Watermonster"];
-const monsterAttributes = ["Eyes", "Arms", "Tentacles", "Horns", "Fingers", "Asses", "Toes", "Feet"]; // OBS! Har man samma attribut två gånger så går det inte redigera det andra då de kommer dela ID.
+const monsterAttributes = ["Eyes", "Arms", "Tentacles", "Horns"]; // OBS! Har man samma attribut två gånger så går det inte redigera det andra då de kommer dela ID.
 
 const allKeys = ["name", "color", "type", ...monsterAttributes];
 const values = [];
