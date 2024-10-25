@@ -114,7 +114,6 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
             const th = document.createElement("th");
             th.scope = "row";
             th.innerHTML = `${label}: `;
-            // th.id = object.name + "-th-" + label.replaceAll(" ", '-');
             row.appendChild(th);
 
             const td = document.createElement("td");
@@ -132,7 +131,7 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
         let i = 0;
         for (element of monsterAttributes) {
 
-            addRow("Number of " + [element], object[element]);
+            addRow("No. of " + [element], object[element]);
 
             i++;
         }
@@ -162,25 +161,21 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
             // Lagrar ursprungliga värden för monsterattribut så att de kan återställas ifall användaren klickar på Cancel
             const originalAttributeValues = {};
             for (let element of monsterAttributes) {
-                const td = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
+                const td = document.getElementById(`${object.name}-No.-of-${element.replaceAll(" ", '-')}`);
                 originalAttributeValues[element] = td.textContent;
             }
 
             // Gör om kortets table till formulär för att redigera
             for (let element of monsterAttributes) {
 
-                const td = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
-                // const th = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
+                const td = document.getElementById(`${object.name}-No.-of-${element.replaceAll(" ", '-')}`);
+                // const th = document.getElementById(`${object.name}-No.-of-${element.replaceAll(" ", '-')}`);
 
                 if (td.id !== `${object.name}-color` || `${object.name}-type`) {
                     const editInput = document.createElement('input');
                     editInput.value = td.textContent;
                     editInput.id = td.id;
                     editInput.type = "number";
-                    // const editLabel = document.createElement('label');
-                    // editLabel.innerHTML = th.innerHTML;
-                    // editLabel.setAttribute('for', editInput.id);
-                    // td.parentNode.replaceChild(editLabel, th);
                     td.parentNode.replaceChild(editInput, td);
                 }
             }
@@ -204,9 +199,6 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
             cardButtonContainer.appendChild(cancelButton);
 
 
-
-
-
             // KNAPP: "Remove" monster
             const removeMonsterButton = document.createElement("button");
             removeMonsterButton.className = "remove-button";
@@ -214,13 +206,6 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
             removeMonsterButton.type = "button";
             removeMonsterButton.innerHTML = '"Remove" monster';
             cardButtonContainer.appendChild(removeMonsterButton);
-
-
-
-
-
-
-
 
 
             // EVENT: Confirm
@@ -239,7 +224,7 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
 
                     // Loopar igenom attributen och ändrar värdena
                     for (let element of monsterAttributes) {
-                        const editInput = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
+                        const editInput = document.getElementById(`${object.name}-No.-of-${element.replaceAll(" ", '-')}`);
                         updatedMonster[element] = editInput.value;
                     }
 
@@ -265,7 +250,7 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
                 // Ändrar tillbaka inputs till td i tabellen
                 for (let element of monsterAttributes) {
 
-                    const editInput = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
+                    const editInput = document.getElementById(`${object.name}-No.-of-${element.replaceAll(" ", '-')}`);
 
                     if (editInput.id !== `${object.name}-color` || `${object.name}-type`) {
                         const td = document.createElement('td');
@@ -308,8 +293,6 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
 }
 
 
-
-
 //Tar emot färg eller typ och lägger in istället för Null, om inget värde så blir värdet null så färg eller typ kommer bli null.
 const filterMonsters = (filterColor = null, filterType = null) => {
     //Här kollar vi filterMonsters och kollar igenom state.collection. Vi använder filter metoden. Vi skapar en ny array på de med samma färg som vi angav med filterMonsters.
@@ -328,30 +311,23 @@ const filterMonsters = (filterColor = null, filterType = null) => {
 // Hämtar arrays och lägger in i rullistor.
 // ===========================================
 window.addEventListener("load", (event) => {
-    //den ligger o lyssnar efter ex en specifik knapp,i detta fallet är det load som gör att sidan ska laddas, väntar på att ngt ska hända!
-    //loopar igenom alla nedanför//koden väntar på att laddas klart innan ngt händer.
-
 
     updateCounts();       // Uppdatera räkningen av färger och typer baserat på initial state.collection
-    i = 0; //detta är en variabel till 0, den är för att hålla koll på indexet för varje alternativ som läggs till.
-    const colors = document.getElementById("monster-Colors"); //koden letar upp ett html-element med id"monster-colors".
+    i = 0;
+    const colors = document.getElementById("monster-colors");
 
     for (const element of monsterColors) {
-        //den loopar igenom en lista(array)som heter monster-colors.
-        //vi vill att du loopar igenom färgerna i arrayen monsterColors, för att inte loopa igenom ngt tomt så använder vi element, gå igenom sakerna i monstercolors!
 
-        const option = document.createElement("option"); // för varje färg i listan skapas ett nytt alternativ(option)som läggs till i färgelementet.
-        //vi har deklarerat en variabel option så säger vi till den att gå in i dom trädet och skapa ett element av typen option!
-        colors.value = i; //värdet är det som vi vill ha in i option taggen, det är det som ska stå!
-        option.text = element; //texten ska vara det elementet som den loopar igenom o i detta fall monsterColors!
-        //options är en html tagg
+        const option = document.createElement("option");
+        colors.value = i;
+        option.text = element;
 
-        colors.add(option); //här säger vi lägg colors till option
-        i++; // denna rad ökar värdet av i med 1.
+        colors.add(option);
+        i++;
     }
 
-    i = 0; //hela denna raden gör som raden ovan
-    const types = document.getElementById("monster-Types"); //hämtar ett element med id monster-types loopar igenom listan monster-types o lägger till varje typ som alternativ.
+    i = 0;
+    const types = document.getElementById("monster-Types");
     for (const element of monsterTypes) {
         const option = document.createElement("option");
         types.value = i;
@@ -359,201 +335,38 @@ window.addEventListener("load", (event) => {
         types.add(option);
         i++;
     }
-    //element är del av webbsida o skapas med hjälp av taggar.
+
     i = 0;
-    const monsterForm = document.getElementById("add-monster-form"); //koden hämtar ett formulär med id"add-monster-form"
+    const monsterForm = document.getElementById("add-monster-form");
     for (const element of monsterAttributes) {
-        //den loopar igenom en lista som heter monsterAttributes.för varje attribut skapas ett inmatningsfält(input) o en etikett(label).
-        // loopar igenom
+
         const input = document.createElement("input");
-        input.className = "attribut"; //detta kan användas för att styla elementet med css,här sätts klassen för input.
-        input.min = "0"; //detta sätter minsta värde som användaren kan ange.
-        input.max = "99"; //detta sätter max värdet som kan anges.
-        input.type = "number"; //användaren kan endast skriva in siffror
-        input.value = "0"; //det initiala värdet är 0
-        input.name = element; //här sätts namnet på inputfältet till det aktuella elementet, vilket gör att det kan indentifieras när formuläret skickas.
+        input.className = "attribut";
+        input.min = "0";
+        input.max = "99";
+        input.type = "number";
+        input.value = "0";
+        input.name = element;
 
-        const label = document.createElement("label"); //denna rad skapar ett nytt label element som används för att ge beskrivning för inputfältet.
+        const label = document.createElement("label");
 
-        label.for = element; //detta kopplar etiketten till inputfältet genom att sätta for-attributet till samma värde som element. detta gör att etiketten klickbar blir och fokuserar på rätt inputfält.
-        label.textContent = element; //sätter texten för etiketten till namnet på attributet,så användaren vet vad de ska fylla i.
+        label.for = element;
+        label.textContent = element;
 
-        monsterForm.appendChild(label); //här läggs etiketten till formuläret.
-        monsterForm.appendChild(input); //denna rad lägger till inputfältet i formuläret också.
+        monsterForm.appendChild(label);
+        monsterForm.appendChild(input);
 
         i++;
-    } //sammanfattning:koden är ansvarig för dynamiskt skapa o lägga till alternativ som färger o typer.
-    //samt inmatningsfält för attribut i ett formulär,allt baserat på data som finns i listor.
-});
-
-// ================FORM RULES================
-// Regler för inputs i formulär
-// ==========================================
-const nameInput = document.getElementById("name");
-nameInput.addEventListener("input", function (event) {
-    let inputValue = event.target.value;
-    let filteredValue = inputValue.replace(/[^A-Za-zÅÄÖåäö\s]/g, "");
-    event.target.value = filteredValue;
-});
-// ==========================================
-
-// ========PUSH MONSTERS TO COLLECTION========
-// Gör monsterobjekt av monsterdata från
-// forumlären och pushar dem till array Collection
-// ===========================================
-function pushMonsters() {
-    const name = document.getElementById("name").value;
-    const color = document.getElementById("monster-Colors").value;
-    const type = document.getElementById("monster-Types").value;
-    const nameExists = state.collection.some((monster) => monster.name === name);
-    if (nameExists) {
-        alert(`Namnet är upptaget av ett monster "${name}" välj ett annat namn.`);
-        return;
-    }
-
-    const values = [name, color, type];
-
-    monsterAttributes.forEach((attribute) => {
-        const input = document.getElementsByName(attribute)[0];
-        values.push(parseInt(input.value));
-    });
-
-    const result = allKeys.reduce((obj, key, index) => {
-        obj[key] = values[index];
-        return obj;
-    }, {});
-
-    state.collection.push(result);
-    renderMonsterCard();
-}
-
-//Aside toggel för app
-// Hämta asiden och knapparna
-const aside = document.querySelector('aside');
-
-// Lägg till ett event som expanderar asiden när du klickar på den
-aside.addEventListener('click', (event) => {
-    // Kolla om klicket kommer från en specifik knapp eller annat innehåll i asiden
-    if (event.target.closest('.filter-button') || event.target.closest('.reset-filter-button')) {
-        // Om det är en knapp, förhindra att asiden stängs
-        event.stopPropagation();
-        return; // Gör ingenting om det är en knapp
-    }
-
-    // Toggla aside för att öppna/stänga den
-    aside.classList.toggle('expanded');
-});
-
-// Om användaren klickar utanför asiden, stäng den
-document.addEventListener('click', (event) => {
-    if (!aside.contains(event.target) && aside.classList.contains('expanded')) {
-        aside.classList.remove('expanded');
     }
 });
 
+// =======================CREATES FILTER BUTTONS========================
+// Skapa knappar för varje färg och inkludera räkningen från colorCount
+// igenom att hålla reda på index.
+// =====================================================================
 
-// form toggel för app
-// Hämta form-container
-const formContainer = document.querySelector('.form-container');
-
-// Klick-händelse för att expandera/kollapsa när man klickar på H4
-document.querySelector('.H4-form').addEventListener('click', () => {
-    formContainer.classList.toggle('expanded');
-});
-
-// Funktion för att stänga formuläret om användaren klickar utanför
-document.addEventListener('click', (event) => {
-    // Kontrollera om klicket var utanför form-container eller dess barn
-    if (!formContainer.contains(event.target)) {
-        formContainer.classList.remove('expanded');
-    }
-});
-
-
-// ==============NUMMER-SLUMPARE===============
-function randomValues() {
-    return Math.floor(Math.random() * 11);
-}
-
-function randomValuesAndAttributes() {
-    return monsterAttributes.reduce((fin, ran) => {
-        fin[ran] = randomValues(ran);
-        return fin;
-    }, {})
-};
-// =============================================
-
-// ===============LAGRAD DATA FÖR DYNAMISKA FUNKTIONER==============
-const monsterColors = ["Blue", "Green", "Red", "Brown", "Purple"];
-const monsterTypes = ["Firemonster", "Skymonster", "Watermonster"];
-const monsterAttributes = ["Eyes", "Arms", "Tentacles", "Horns"]; // OBS! Har man samma attribut två gånger så går det inte redigera det andra då de kommer dela ID.
-
-const allKeys = ["name", "color", "type", ...monsterAttributes];
-const values = [];
-
-// =================================================================
-
-
-// ==============APP STARTAR HÄR==============
-
-const state = {
-    collection: [
-        { name: "Grimblot", type: monsterTypes[1], color: monsterColors[1], ...randomValuesAndAttributes() },
-        { name: "Zarok", type: monsterTypes[0], color: monsterColors[0], ...randomValuesAndAttributes() },
-        { name: "Blisterfang", type: monsterTypes[1], color: monsterColors[1], ...randomValuesAndAttributes() },
-        { name: "Thraxxis", type: monsterTypes[2], color: monsterColors[2], ...randomValuesAndAttributes() },
-        { name: "Murkspawn", type: monsterTypes[0], color: monsterColors[3], ...randomValuesAndAttributes() },
-        { name: "Vorrgath", type: monsterTypes[1], color: monsterColors[4], ...randomValuesAndAttributes() },
-        { name: "Gorlax ", type: monsterTypes[2], color: monsterColors[0], ...randomValuesAndAttributes() },
-        { name: "Zephraxis", type: monsterTypes[1], color: monsterColors[4], ...randomValuesAndAttributes() },
-
-    ],
-};
-
-document.getElementById("form-button").addEventListener("click", () => {
-    pushMonsters();
-
-    updateCounts();
-
-    renderMonsterCard();
-
-    // Rensar formulär efter submit
-    document.getElementById("add-monster-form").reset();
-});
-
-renderMonsterCard();
-
-// Skapa arrays för räkning av färger och typer av monster - Detta används senare i skapande av knappar - arrayerna är lika långa som arrayerna för typ och färg och fyller arrayerna med 0:or
-const colorCount = new Array(monsterColors.length).fill(0); // Initierar med 0
-const typeCount = new Array(monsterTypes.length).fill(0); // Initierar med 0
-
-function updateCounts() {
-    //Återställer räknarna.
-    colorCount.fill(0);
-    typeCount.fill(0);
-
-    // Loopa igenom collection-arrayen för att jämföra index från arrayer "monsterColors och monsterTypes"
-    // om samma index = Samma färg och lägg till i counter array för att skickas till korten när dem skapas
-    state.collection.forEach((monster) => {
-        const colorIndex = monsterColors.indexOf(monster.color);
-        const typeIndex = monsterTypes.indexOf(monster.type);
-
-        // Om index inte är -1, plussa på en. -1 = färg/typ finns inte i array och är felaktig och räknas då inte.
-        if (colorIndex !== -1) {
-            colorCount[colorIndex]++;
-        }
-
-        if (typeIndex !== -1) {
-            typeCount[typeIndex]++;
-        }
-    });
-
-    updateFilterButtons();
-}
-
-// Skapa knappar för varje färg och inkludera räkningen från colorCount igenom att hålla reda på index.
 // Kontrollera om reset-knappen redan finns
-let resetButton; // Reset-knappen definieras globalt
+let resetButton;
 
 //Hämtar från dom-trädet - För att appenda barn till dessa som är föräldrar.
 const filterContainer = document.querySelector(".filter-container");
@@ -632,6 +445,175 @@ function createResetButton() {
         });
     }
 }
+// ========================================================
+
+// ================FORM RULES================
+// Regler för inputs i formulär
+// ==========================================
+const nameInput = document.getElementById("name");
+nameInput.addEventListener("input", function (event) {
+    let inputValue = event.target.value;
+    let filteredValue = inputValue.replace(/[^A-Za-zÅÄÖåäö\s]/g, "");
+    event.target.value = filteredValue;
+});
+// ==========================================
+
+// ========PUSH MONSTERS TO COLLECTION========
+// Gör monsterobjekt av monsterdata från
+// forumlären och pushar dem till array Collection
+// ===========================================
+function pushMonsters() {
+    const name = document.getElementById("name").value;
+    const color = document.getElementById("monster-colors").value;
+    const type = document.getElementById("monster-Types").value;
+
+    const nameExists = state.collection.some((monster) => monster.name === name);
+
+    if (nameExists) {
+        alert(`Namnet är upptaget av ett monster "${name}" välj ett annat namn.`);
+        return;
+    }
+
+    const values = [name, color, type];
+
+    monsterAttributes.forEach((attribute) => {
+        const input = document.getElementsByName(attribute)[0];
+        values.push(parseInt(input.value));
+    });
+
+    const result = allKeys.reduce((obj, key, index) => {
+        obj[key] = values[index];
+        return obj;
+    }, {});
+
+    state.collection.push(result);
+    renderMonsterCard();
+}
+// ============================================================
+
+
+//Aside toggel för app
+// Hämta asiden och knapparna
+const aside = document.querySelector('aside');
+
+// Lägg till ett event som expanderar asiden när du klickar på den
+aside.addEventListener('click', (event) => {
+    // Kolla om klicket kommer från en specifik knapp eller annat innehåll i asiden
+    if (event.target.closest('.filter-button') || event.target.closest('.reset-filter-button')) {
+        // Om det är en knapp, förhindra att asiden stängs
+        event.stopPropagation();
+        return; // Gör ingenting om det är en knapp
+    }
+
+    // Toggla aside för att öppna/stänga den
+    aside.classList.toggle('expanded');
+});
+
+// Om användaren klickar utanför asiden, stäng den
+document.addEventListener('click', (event) => {
+    if (!aside.contains(event.target) && aside.classList.contains('expanded')) {
+        aside.classList.remove('expanded');
+    }
+});
+
+
+// form toggel för app
+// Hämta form-container
+const formContainer = document.querySelector('.form-container');
+
+// Klick-händelse för att expandera/kollapsa när man klickar på H4
+document.querySelector('.H4-form').addEventListener('click', () => {
+    formContainer.classList.toggle('expanded');
+});
+
+// Funktion för att stänga formuläret om användaren klickar utanför
+document.addEventListener('click', (event) => {
+    // Kontrollera om klicket var utanför form-container eller dess barn
+    if (!formContainer.contains(event.target)) {
+        formContainer.classList.remove('expanded');
+    }
+});
+
+
+// ==============NUMMER-SLUMPARE===============
+function randomValues() {
+    return Math.floor(Math.random() * 11);
+}
+
+function randomValuesAndAttributes() {
+    return monsterAttributes.reduce((fin, ran) => {
+        fin[ran] = randomValues(ran);
+        return fin;
+    }, {})
+};
+// =============================================
+
+// ===============LAGRAD DATA FÖR DYNAMISKA FUNKTIONER==============
+const monsterColors = ["Blue", "Green", "Red", "Brown", "Purple"];
+const monsterTypes = ["Firemonster", "Skymonster", "Watermonster"];
+const monsterAttributes = ["Eyes", "Arms", "Tentacles", "Horns", "Fingers", "Asses", "Toes", "Feet"]; // OBS! Har man samma attribut två gånger så går det inte redigera det andra då de kommer dela ID.
+
+const allKeys = ["name", "color", "type", ...monsterAttributes];
+const values = [];
+
+// Skapa arrays för räkning av färger och typer av monster - Detta används senare i skapande av knappar - arrayerna är lika långa som arrayerna för typ och färg och fyller arrayerna med 0:or
+const colorCount = new Array(monsterColors.length).fill(0); // Initierar med 0
+const typeCount = new Array(monsterTypes.length).fill(0); // Initierar med 0
+// =================================================================
+
+
+// ==============APP STARTAR HÄR==============
+
+const state = {
+    collection: [
+        { name: "Grimblot", type: monsterTypes[1], color: monsterColors[1], ...randomValuesAndAttributes() },
+        { name: "Zarok", type: monsterTypes[0], color: monsterColors[0], ...randomValuesAndAttributes() },
+        { name: "Blisterfang", type: monsterTypes[1], color: monsterColors[1], ...randomValuesAndAttributes() },
+        { name: "Thraxxis", type: monsterTypes[2], color: monsterColors[2], ...randomValuesAndAttributes() },
+        { name: "Murkspawn", type: monsterTypes[0], color: monsterColors[3], ...randomValuesAndAttributes() },
+        { name: "Vorrgath", type: monsterTypes[1], color: monsterColors[4], ...randomValuesAndAttributes() },
+        { name: "Gorlax", type: monsterTypes[2], color: monsterColors[0], ...randomValuesAndAttributes() },
+        { name: "Zephraxis", type: monsterTypes[1], color: monsterColors[4], ...randomValuesAndAttributes() },
+
+    ],
+};
+
+document.getElementById("form-button").addEventListener("click", () => {
+    pushMonsters();
+
+    updateCounts();
+
+    // renderMonsterCard();
+
+    // Rensar formulär efter submit
+    document.getElementById("add-monster-form").reset();
+});
+
+
+
+function updateCounts() {
+    //Återställer räknarna.
+    colorCount.fill(0);
+    typeCount.fill(0);
+
+    // Loopa igenom collection-arrayen för att jämföra index från arrayer "monsterColors och monsterTypes"
+    // om samma index = Samma färg och lägg till i counter array för att skickas till korten när dem skapas
+    state.collection.forEach((monster) => {
+        const colorIndex = monsterColors.indexOf(monster.color);
+        const typeIndex = monsterTypes.indexOf(monster.type);
+
+        // Om index inte är -1, plussa på en. -1 = färg/typ finns inte i array och är felaktig och räknas då inte.
+        if (colorIndex !== -1) {
+            colorCount[colorIndex]++;
+        }
+
+        if (typeIndex !== -1) {
+            typeCount[typeIndex]++;
+        }
+    });
+
+    updateFilterButtons();
+}
+
 
 renderMonsterCard();
-

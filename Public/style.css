@@ -1,0 +1,779 @@
+/*-----------------------------------------------------------------------------------------  */
+/* ----------------------Reset, body, container börjar här---------------------------------- */
+/*-----------------------------------------------------------------------------------------  */
+* {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html,
+body {
+  background-image: url(https://i.postimg.cc/fRFrdyMJ/Background.webp);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#container {
+  display: grid;
+  max-height: 100%;
+  max-width: 100%;
+  grid-template-columns: 1fr 4fr auto;
+  grid-template-areas:
+    "form content database"
+}
+
+@media screen and (max-width: 600px) {
+  #container {
+    display: grid;
+    min-height: fit-content;
+    max-width: 100vw;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "form"
+      "database"
+      "content"    
+  }
+}
+
+/*-----------------------------------------------------------------------------------------  */
+/* -------------------------Reset, body, container slutar här------------------------------- */
+/*-----------------------------------------------------------------------------------------  */
+/* ------------------------------Aside börjar här------------------------------------------- */
+/*-----------------------------------------------------------------------------------------  */
+@media screen and (max-width: 600px) {
+  .monster {
+    width: 150px;
+    /* height: 500px; */
+    color: #EDF5FC;
+    text-shadow: 2px 3px 4px rgba(0, 0, 0, 0.8);
+    background-color: transparent;
+    perspective: 1000px;
+    margin: 3%;
+
+    .edit-button, .confirm-button, .cancel-button, .remove-button {
+      font-size: 80%;
+    }
+    
+  }
+
+  .monster-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+
+    tr {
+      display: grid;
+      grid-template-areas: "Attribute Value";
+      grid-template-columns: auto 1fr;
+    }
+
+    input {
+      grid-area: Value;
+      text-align: right;
+      width: 100%;
+      height: min-content; 
+    }
+  }
+
+ 
+  .monster:hover .monster-inner:hover {
+    transform: rotateY(180deg);
+    
+  }
+
+
+  .monster-front,
+  .monster-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; 
+    backface-visibility: hidden;
+  }
+
+
+  .monster-front {
+    border-radius: 5px 30px 5px 30px;
+    outline: 5px inset #edf5fc73;
+    background-color: rgba(116, 79, 198, 0.05);
+    backdrop-filter: blur(3px);
+    box-shadow: 
+    0px 10px 15px 10px rgba(0, 0, 0, 0.15),
+    2px 4px 6px rgba(0, 0, 0, 0.2),
+    4px 8px 12px rgba(0, 0, 0, 0.3);
+    filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.3));
+
+    .table-scroll {
+      /* display: flex;
+      flex: content; */
+      /* height: 100%; */
+      grid-area: Attributes;
+        /* overflow-y: scroll; */
+        /* height: fit-content; */
+      }
+
+    table {
+      width: 90%;
+      margin-top: 15%;
+      margin-left: 5%;
+    }
+  
+    tr {
+      font-size: 16px;
+    }
+
+    caption {
+      font-size: 50%;
+      text-transform: uppercase;
+      margin-bottom: 25%;
+    }
+
+
+    td {
+      display: none;
+    }
+
+    th {
+      text-align: left;
+      display: none;
+    }
+
+    
+  }
+
+  
+
+
+
+  .monster-back {
+    
+    border-radius: 30px 5px 30px 5px;
+    outline: 5px inset #edf5fc73;
+    background-color: rgba(116, 79, 198, 0.05);
+    backdrop-filter: blur(3px);
+    box-shadow: 
+    0px 10px 15px 10px rgba(0, 0, 0, 0.15),
+    2px 4px 6px rgba(0, 0, 0, 0.2),
+    4px 8px 12px rgba(0, 0, 0, 0.3);
+    filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.3));
+    transform: rotateY(180deg);
+    grid-template-areas: 
+    "Attributes"
+    "Buttons";
+    font-size: 100%;
+    
+    
+    
+  
+
+    table {
+      
+      width: 90%;
+      font-size: 50%;
+      margin-top: 15%;
+      margin-bottom: 15%;
+      margin-left: 5%;
+    }
+
+    
+    
+    input {
+      text-align: right;
+      font-size: 90%;
+      color: #EDF5FC;
+      width: 2.5rem;
+      height: 1.2rem;
+      border-radius: 20px;
+      background-color: #ffffff1c;
+      backdrop-filter: blur(3px);
+      text-shadow: 2px 3px 4px rgba(0, 0, 0);
+      outline: 2px groove #edf5fc73;
+    }
+
+      th {
+        text-align: left;
+    }
+  }
+
+  .card-button-container {
+    grid-area: Buttons;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.8rem;
+  }
+  
+}
+
+@media screen and (max-width: 600px) {
+  aside {
+    grid-area: database;
+    width: 100vw;
+    height: 4vh;
+    overflow: hidden;
+    display: grid;
+    display: flex;
+    grid-template-columns: 1fr;
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(
+      140deg,
+      rgba(137, 130, 141, 1) 0%,
+      rgba(163, 155, 168, 1) 35%,
+      rgba(208, 197, 215, 1) 100%
+    );
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+aside.expanded {
+  height: fit-content;
+}
+
+
+    .filter-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto auto;
+      gap: 10px;
+      justify-content: space-between;
+      margin-inline: 2rem;
+
+    }
+
+    .filters-color,
+    .filters-monster {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .reset-filter-container {
+      display: grid;
+      grid-column: 1 / -1; /* Centrera knappen över hela bredden */
+    }
+
+    .reset-filter-button {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    h4 {
+      grid-column: 1 / -1; /* Centrera knappen över hela bredden */
+      margin: 10px 0; /* Avstånd ovanför och nedanför rubrikerna */
+      text-align: center; /* Centrera texten */
+    }
+
+    .filter-button,
+    .reset-filter-button {
+      background-color: white; /* Vit bakgrund för knapparna */
+      border: 2px solid rgba(116, 79, 198, 1); /* Ljusgrå kant */
+      border-radius: 20px; /* Rundade kanter */
+      padding: 10px; /* Utrymme inuti knappen */
+      font-size: 18px; /* Textstorlek */
+      cursor: pointer; /* Pekar muspekaren */
+      transition: background-color 0.5s, color 0.5s; /* Mjuk övergång */
+      min-height: 50px; /* Minimum höjd för knapparna */
+      text-align: center; /* Centrera texten i knapparna */
+    }
+
+    /* Hover-effekt */
+    .filter-button:hover,
+    .reset-filter-button:hover {
+      background-color: #dfd2d2; /* Ljusgrå bakgrund vid hover */
+    }
+  }
+
+
+@media screen and (min-width: 601px) {
+/* Sido-menyn för filter / statistik. 
+Finns hover funktion på asiden. */
+aside {
+  grid-area: database;
+  background: linear-gradient(
+    140deg,
+    rgba(137, 130, 141, 1) 0%,
+    rgba(163, 155, 168, 1) 35%,
+    rgba(208, 197, 215, 1) 100%
+  );
+  padding: 10px;
+  position: relative;
+  width: 50px; /* Standardbredd när den inte är hovrad */
+  height: fit-content;
+  transition: width 1.5s ease; /* Mjuk övergång för breddändring */
+  overflow: hidden; /* gör så att inget innehåll går utanför aside fast än att aside är mindre än vad innehållet behöver */
+  margin: 1rem 0 1rem 1rem;
+  border-radius: 20px 0px 0px 20px;
+  box-shadow: rgb(52, 52, 52) 5px 5px 10px;
+  border: 1px solid #ddd;
+}
+
+
+/* :Hover ger asiden andra attribute när man hovrar den och den växer också till bestämd bredd.  */
+aside:hover {
+  width: 275px; /* Bredd för när aside är hovrad */
+  border-radius: 10px 0px 0px 60px; /* Rundade kanter för aside - Gjort dem rundare när man hovrar */
+  
+}
+
+/* Ändrar om texten "Filter" så att den är vertikal istället för horisontell. när aside inte är hovrad */
+.statistik {
+  writing-mode: vertical-rl; /* Gör texten vertikal */
+  text-decoration: underline overline 2px #dfd2d2;
+  margin-top: 10px;
+  text-underline-offset: 7px;
+  font-weight: bold;
+  font-size: x-large;
+  text-align: center;
+  letter-spacing: 5px;
+  margin-left: 10px; /* Avstånd under caption */
+  transition: writing-mode 0.3s ease, transform 0.3s ease; /* Mjuk övergång för stiländringar */
+}
+
+/* Vid hover så visas "filtret" horisontellt igen. */
+aside:hover .statistik {
+  writing-mode: horizontal-tb; /* Gör texten horisontell vid hover */
+}
+
+.filter-container {
+  /* startar grid layout för barnen i filter-container */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto auto auto;
+  opacity: 0; /* Dölja knapparna */
+  visibility: hidden; /* Dölja knapparna */
+  transition: opacity 1.5s ease, visibility 1.5s; /* Fadear in knapparna så dem syns sakta men säkert */
+  gap: 10px;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+/* Visa knapparna när det är hover */
+aside:hover .filter-container {
+  opacity: 1; /* Visa knapparna vid hover */
+  visibility: visible; /* Gör knapparna synliga */
+  transition: opacity 1.5s ease, visibility 0s; /* Fadear in knapparna så dem syns sakta men säkert */
+}
+
+.filters-color,
+.filters-monster {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.reset-filter-container {
+  display: grid;
+  grid-column: 1 / -1; /* Centrera knappen över hela bredden */
+  margin-left: 10px;
+}
+
+.reset-filter-button {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+h4 {
+  grid-column: 1 / -1; /* Centrera knappen över hela bredden */
+  margin: 10px 0; /* Avstånd ovanför och nedanför rubrikerna */
+  text-align: center; /* Centrera texten */
+}
+
+.filter-button,
+.reset-filter-button {
+  background-color: white; /* Vit bakgrund för knapparna */
+  border: 2px solid rgba(116, 79, 198, 1); /* Ljusgrå kant */
+  border-radius: 20px; /* Rundade kanter */
+  padding: 10px; /* Utrymme inuti knappen */
+  font-size: 14px; /* Textstorlek */
+  cursor: pointer; /* Pekar muspekaren */
+  transition: background-color 0.5s, color 0.5s; /* Mjuk övergång */
+  min-height: 50px; /* Minimum höjd för knapparna */
+  text-align: center; /* Centrera texten i knapparna */
+}
+
+/* Hover-effekt */
+.filter-button:hover,
+.reset-filter-button:hover {
+  background-color: #dfd2d2; /* Ljusgrå bakgrund vid hover */
+}
+}
+/*-----------------------------------------------------------------------------------------  */
+/* ------------------------------Aside slutar här------------------------------------------- */
+/*-----------------------------------------------------------------------------------------  */
+
+.collection {
+  grid-area: content;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  height: 100vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+
+@media screen and (max-width: 600px) {
+  .collection {
+    grid-area: content;
+    height: 92vh;
+    gap: 5%;
+    overflow: scroll;
+  }
+}
+
+
+@media screen and (min-width: 601px) {
+  .monster {
+    width: 250px;
+    height: 355px;
+    margin: 20px;
+    padding: 20px;
+    color: #EDF5FC;
+    text-shadow: 2px 3px 4px rgba(0, 0, 0, 0.8);
+    perspective: 1000px;
+    
+  }
+}
+
+
+  .monster-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+
+  }
+
+ 
+  .monster:hover .monster-inner {
+    transform: rotateY(180deg);
+    
+  }
+
+
+  .monster-front,
+  .monster-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; 
+    backface-visibility: hidden;
+  }
+
+
+  .monster-front {
+    border-radius: 5px 30px 5px 30px;
+    outline: 5px inset #edf5fc73;
+    background-color: rgba(116, 79, 198, 0.05);
+    backdrop-filter: blur(3px);
+    box-shadow: 
+    0px 10px 15px 10px rgba(0, 0, 0, 0.15),
+    2px 4px 6px rgba(0, 0, 0, 0.2),
+    4px 8px 12px rgba(0, 0, 0, 0.3);
+    filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.3));
+    
+  
+    table {
+      width: 90%;
+      font-size: 140%;
+      margin-top: 15%;
+      margin-left: 5%;
+    }
+
+    h3 {
+      
+      font-size: 150%;
+      text-transform: uppercase;
+      margin-bottom: 25%;
+    }
+
+
+    td {
+      text-align: right;
+      font-style: italic;
+    }
+
+    th {
+      text-align: left;
+      text-transform: uppercase;
+    }
+
+  }
+
+
+
+  .monster-back {
+    border-radius: 30px 5px 30px 5px;
+    outline: 5px inset #edf5fc73;
+    background-color: rgba(116, 79, 198, 0.05);
+    backdrop-filter: blur(3px);
+    box-shadow: 
+    0px 10px 15px 10px rgba(0, 0, 0, 0.15),
+    2px 4px 6px rgba(0, 0, 0, 0.2),
+    4px 8px 12px rgba(0, 0, 0, 0.3);
+    filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.3));
+    transform: rotateY(180deg);
+    grid-template-areas: 
+    "Attributes"
+    "Buttons";
+    display: flex;
+    flex-direction: column;
+    
+    .table-scroll {
+      height: 50%;
+      overflow-y: scroll;
+      scrollbar-width: none;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      margin-inline: 1rem;
+      border-radius: 20px 3px 3px 3px;
+      outline: 5px groove #edf5fc73;
+    }
+
+    /* @media screen and (max-width: 600px) {
+      .table-scroll {
+        grid-area: Attributes;
+        overflow-y: scroll;
+        height: fit-content;
+      }
+    }
+     */
+  
+
+    table {
+      grid-area: Attributes;
+      width: 90%;
+      font-size: 130%;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      margin-left: 5%;
+      
+    }
+
+    td {
+      text-align: center;
+    }
+    
+    
+    input {
+      text-align: right;
+      font-size: 90%;
+      color: #EDF5FC;
+      width: 2.5rem;
+      height: 1.2rem;
+      border-radius: 20px;
+      background-color: #ffffff1c;
+      backdrop-filter: blur(3px);
+      text-shadow: 2px 3px 4px rgba(0, 0, 0);
+      outline: 2px groove #edf5fc73;
+    }
+
+      th {
+        text-align: left;
+        
+    }
+  }
+
+  .card-button-container {
+    grid-area: Buttons;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
+h4 {
+  margin-bottom: 5px;
+}
+
+
+
+
+a {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 3%;
+}
+
+img {
+  max-inline-size: 30%;
+}
+
+
+@media screen and (min-width: 601px) {
+  .form-container {
+    grid-area: form;
+    display: grid;
+    justify-content: space-between;
+    background: linear-gradient(
+      140deg,
+      rgba(137, 130, 141, 1) 0%,
+      rgba(163, 155, 168, 1) 35%,
+      rgba(208, 197, 215, 1) 100%
+    );
+    width: fit-content;
+    height: fit-content;
+    margin: 1rem;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: rgb(52, 52, 52) 5px 5px 10px;
+    text-align: center;
+    font-weight: bold;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+
+    h4 {
+      font-size: 150%;
+      color:#272D2D ;
+      text-decoration: underline overline #dfd2d2;
+      text-underline-offset: 7px;     
+      
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .form-container {
+    grid-area: form;
+    width: 100vw;
+    height: 4vh;
+    overflow: hidden;
+    display: grid;
+    display: flex;
+    
+    grid-template-columns: 1fr;
+    flex-direction: column;
+    background: linear-gradient(
+      140deg,
+      rgba(137, 130, 141, 1) 0%,
+      rgba(163, 155, 168, 1) 35%,
+      rgba(208, 197, 215, 1) 100%
+    );
+
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+.form-container.expanded {
+  height: fit-content;
+}
+
+#add-monster-form {
+  display: grid;
+  
+}
+
+#form-button {
+  margin-top: 10px;
+  border: 2px solid rgba(137, 130, 141, 1);
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  max-height: 50px;
+}
+
+#alertDiv {
+  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+
+  z-index: 1000;
+
+  min-height: 40%;
+
+  min-width: 40%;
+}
+
+img {
+  min-height: 60%;
+  min-width: 80%;
+}
+
+.edit-button,
+.confirm-button,
+.cancel-button,
+.remove-button {
+  font-size: 16px;
+  font-weight: bolder;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: 20px;
+  color:#EDF5FC;
+  cursor: pointer;
+  transition: background-position 0.5s ease;
+  height: 30px;
+  width: 90%;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #ffffff1c;
+  backdrop-filter: blur(3px);
+  text-shadow: 2px 3px 4px rgba(0, 0, 0);
+  outline: 5px groove #edf5fc73;
+  margin: 3%;
+}
+
+#alertButton {
+  background-color: #edf5fc;
+  background-image: linear-gradient(
+    170deg,
+    rgba(63, 43, 109, 1) 0%,
+    rgba(116, 79, 198, 1) 30%,
+    rgb(208, 191, 246) 100%
+  );
+  background-size: 400% 400%;
+  background-position: 100% 100%;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-position 0.5s ease;
+  height: 30px;
+  width: 90%;
+  text-align: center;
+  margin: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.edit-button:hover,
+.confirm-button:hover,
+.cancel-button:hover,
+.remove-button:hover,
+#alertButton:hover {
+  box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.5);
+  transition: box-shadow 0.5s ease;
+}
+
+.edit-button:active,
+.confirm-button:active,
+.cancel-button:active,
+.remove-button:active,
+#alertButton:active {
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+
