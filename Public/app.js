@@ -65,9 +65,9 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
         monsterInner.appendChild(monsterBack);
 
         // Skapar tabell till den nyskapade article-tag'en
-        const table = document.createElement("table");
-        table.className = object.name.replaceAll(" ", "-") + "-table";
-        monsterBack.appendChild(table);
+        // const table = document.createElement("table");
+        // table.className = object.name.replaceAll(" ", "-") + "-table";
+        // monsterBack.appendChild(table);
 
         const monsterFront = document.createElement("div");
         // const monsterFront = monsterBack.cloneNode(true);

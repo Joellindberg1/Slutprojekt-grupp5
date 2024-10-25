@@ -50,12 +50,13 @@ body {
 @media screen and (max-width: 600px) {
   .monster {
     width: 150px;
-    /* height: 500px; */
+    height: 300px;
     color: #EDF5FC;
     text-shadow: 2px 3px 4px rgba(0, 0, 0, 0.8);
     background-color: transparent;
     perspective: 1000px;
     margin: 3%;
+    
 
     .edit-button, .confirm-button, .cancel-button, .remove-button {
       font-size: 80%;
@@ -69,6 +70,7 @@ body {
     height: 100%;
     transition: transform 0.8s;
     transform-style: preserve-3d;
+    
 
     tr {
       display: grid;
@@ -96,12 +98,17 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
+    min-height: fit-content;
     -webkit-backface-visibility: hidden; 
     backface-visibility: hidden;
+    
   }
 
 
   .monster-front {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 5px 30px 5px 30px;
     outline: 5px inset #edf5fc73;
     background-color: rgba(116, 79, 198, 0.05);
@@ -111,31 +118,27 @@ body {
     2px 4px 6px rgba(0, 0, 0, 0.2),
     4px 8px 12px rgba(0, 0, 0, 0.3);
     filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.3));
-
-    .table-scroll {
-      /* display: flex;
-      flex: content; */
-      /* height: 100%; */
-      grid-area: Attributes;
-        /* overflow-y: scroll; */
-        /* height: fit-content; */
-      }
-
+    
+    
+    
     table {
       width: 90%;
-      margin-top: 15%;
-      margin-left: 5%;
+      
+      caption {
+      
+        
+      font-size: 100%;
+      text-transform: uppercase;
+      margin-bottom: 25%;
+    }
+
     }
   
     tr {
       font-size: 16px;
     }
 
-    caption {
-      font-size: 50%;
-      text-transform: uppercase;
-      margin-bottom: 25%;
-    }
+
 
 
     td {
@@ -166,24 +169,32 @@ body {
     4px 8px 12px rgba(0, 0, 0, 0.3);
     filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.3));
     transform: rotateY(180deg);
+    display: grid;
+    grid-template-rows: 3fr 2fr;
     grid-template-areas: 
     "Attributes"
     "Buttons";
     font-size: 100%;
     
     
-    
-  
-
-    table {
+    .table-scroll {
+      grid-area: Attributes;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      height: 150px;
+      overflow-y: scroll;
+      scrollbar-width: none;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      margin-inline: 1rem;
+      outline: 5px groove #edf5fc73;
       
-      width: 90%;
-      font-size: 50%;
-      margin-top: 15%;
-      margin-bottom: 15%;
-      margin-left: 5%;
     }
-
+  
+    td {
+      text-align: right;
+    }
     
     
     input {
@@ -426,9 +437,12 @@ h4 {
 @media screen and (max-width: 600px) {
   .collection {
     grid-area: content;
-    height: 92vh;
-    gap: 5%;
-    overflow: scroll;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    height: 100vh;
+    /* gap: 5%; */
+    overflow-y: scroll;
   }
 }
 
@@ -444,7 +458,7 @@ h4 {
     perspective: 1000px;
     
   }
-}
+
 
 
   .monster-inner {
@@ -474,6 +488,9 @@ h4 {
 
 
   .monster-front {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 5px 30px 5px 30px;
     outline: 5px inset #edf5fc73;
     background-color: rgba(116, 79, 198, 0.05);
@@ -483,14 +500,17 @@ h4 {
     2px 4px 6px rgba(0, 0, 0, 0.2),
     4px 8px 12px rgba(0, 0, 0, 0.3);
     filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.3));
-    
-  
+
     table {
+      display: flex;
+      flex-direction: column;
+      /* align-items: center; */
+      /* align-content: space-between; */
       width: 90%;
-      font-size: 140%;
-      margin-top: 15%;
-      margin-left: 5%;
+
+      
     }
+
 
     h3 {
       
@@ -499,6 +519,11 @@ h4 {
       margin-bottom: 25%;
     }
 
+    tr {
+    font-size: 130%;
+    display: flex;
+    justify-content: space-between;
+    }
 
     td {
       text-align: right;
@@ -542,17 +567,9 @@ h4 {
       outline: 5px groove #edf5fc73;
     }
 
-    /* @media screen and (max-width: 600px) {
-      .table-scroll {
-        grid-area: Attributes;
-        overflow-y: scroll;
-        height: fit-content;
-      }
-    }
-     */
-  
 
     table {
+      
       grid-area: Attributes;
       width: 90%;
       font-size: 130%;
@@ -593,6 +610,7 @@ h4 {
     align-items: center;
   }
 
+}
 
 h4 {
   margin-bottom: 5px;
