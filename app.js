@@ -29,8 +29,6 @@ const customAlert = () => {
   });
 };
 
-// ===============CLOSE ALERT=================
-
 const alertDiv = document.getElementById("alertDiv");
 function invokeAlert() {
   alertDiv.style.display = "block";
@@ -56,45 +54,44 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
     monster.className = "monster";
     monster.id = object.name.replaceAll(" ", "-");
 
-    // Tags för att vända kort i mobil
-    const monsterInner = document.createElement("div");
-    monsterInner.className = "monster-inner";
-    monster.appendChild(monsterInner);
+    // Loopar igenom den angivna arrayen för att skapa monsterkort
+    monstersToRender.forEach(object => {
 
-    const monsterBack = document.createElement("div");
-    monsterBack.className = "monster-back";
-    monsterInner.appendChild(monsterBack);
+        // Skapar ny article-tag
+        const monster = document.createElement("article");
+        monster.className = "monster";
+        monster.id = object.name.replaceAll(" ", '-');
+        monster.tabIndex = "0";
+
+
+        // Tags för att vända kort
+        const monsterInner = document.createElement("div");
+        monsterInner.className = "monster-inner";
+        monster.appendChild(monsterInner);
 
     // Skapar tabell till den nyskapade article-tag'en
     const table = document.createElement("table");
     table.className = object.name.replaceAll(" ", "-") + "-table";
     monsterBack.appendChild(table);
 
-    const caption = document.createElement("caption");
-    table.appendChild(caption);
+        const monsterFront = document.createElement("div");
+        // const monsterFront = monsterBack.cloneNode(true);
+        monsterFront.className = "monster-front";
+        monsterInner.appendChild(monsterFront);
 
     const h3 = document.createElement("h3");
     h3.innerHTML = object.name;
     caption.appendChild(h3);
 
-    // Stödfunktion för att skapa rader i tabellen
-    const addRow = (label, value) => {
-      const row = document.createElement("tr");
-      row.className = "hide-on-mobile";
-      table.appendChild(row);
+        // Skapar tabell till baksidan av kortet
+        const tableBack = document.createElement("table");
+        tableBack.className = object.name.replaceAll(" ", '-') + "-table-back";
+        monsterBack.appendChild(tableBack);
 
-      const th = document.createElement("th");
-      th.scope = "row";
-      th.innerHTML = `${label}: `;
-      // th.id = object.name + "-th-" + label.replaceAll(" ", '-');
-      row.appendChild(th);
-
-      const td = document.createElement("td");
-      td.innerHTML = value;
-      td.className = value;
-      td.id = object.name + "-" + label.replaceAll(" ", "-");
-      row.appendChild(td);
-    };
+        // Skapar tabell till framsidan av kortet
+        const tableFront = document.createElement("table");
+        tableFront.className = object.name.replaceAll(" ", '-') + "-table-front";
+        monsterFront.appendChild(tableFront);
 
     // Skapar radernas innehåll
     addRow("Color", object.color);
@@ -110,14 +107,8 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
     const cardButtonContainer = document.createElement("div");
     cardButtonContainer.className = "card-button-container";
 
-    // KNAPP: Edit
-    const editButton = document.createElement("button");
-    editButton.className = "edit-button";
-    editButton.id = "edit-" + object.name.replaceAll(" ", "-");
-    editButton.type = "button";
-    editButton.innerHTML = "Edit monster";
-    cardButtonContainer.appendChild(editButton);
-    monsterBack.appendChild(cardButtonContainer);
+        const caption = document.createElement("caption");
+        tableFront.appendChild(caption);
 
     const monsterFront = monsterBack.cloneNode(true);
     monsterFront.className = "monster-front";
@@ -135,12 +126,16 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
         originalAttributeValues[element] = td.textContent;
       }
 
-      // Gör om kortets table till formulär för att redigera
-      for (let element of monsterAttributes) {
-        const td = document.getElementById(
-          `${object.name}-Number-of-${element.replaceAll(" ", "-")}`
-        );
-        // const th = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
+        // Stödfunktion för att skapa rader i tabellen
+        const addRow = (label, value) => {
+            const row = document.createElement("tr");
+
+
+            if (label === "Color" || label === "Type") {
+                tableFront.appendChild(row);
+            } else {
+                tableBack.appendChild(row);
+            }
 
         if (td.id !== `${object.name}-color` || `${object.name}-type`) {
           const editInput = document.createElement("input");
@@ -243,9 +238,13 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
         cardButtonContainer.removeChild(removeMonsterButton);
       });
 
-      // EVENT: "Remove" monster
-      removeMonsterButton.addEventListener("click", (e) => {
-        e.preventDefault();
+        let i = 0;
+        for (element of monsterAttributes) {
+
+            addRow("Number of " + [element], object[element]);
+
+            i++;
+        }
 
         const monsterIndex = state.collection.findIndex(
           (monster) => monster.name === `${object.name}`
@@ -257,7 +256,177 @@ const renderMonsterCard = (monstersToRender = state.collection) => {
         cardButtonContainer.removeChild(cancelButton);
         cardButtonContainer.removeChild(removeMonsterButton);
 
-        renderMonsterCard();
+        // Skapar knapp-container
+        const cardButtonContainer = document.createElement('div');
+        cardButtonContainer.className = "card-button-container";
+
+        // KNAPP: Edit
+        const editButton = document.createElement("button");
+        editButton.className = "edit-button";
+        editButton.id = "edit-" + object.name.replaceAll(" ", '-');
+        editButton.type = "button";
+        editButton.innerHTML = "Edit monster";
+        cardButtonContainer.appendChild(editButton);
+        monsterBack.appendChild(cardButtonContainer);
+
+
+
+        // EVENT: Edit
+        editButton.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // Lagrar ursprungliga värden för monsterattribut så att de kan återställas ifall användaren klickar på Cancel
+            const originalAttributeValues = {};
+            for (let element of monsterAttributes) {
+                const td = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
+                originalAttributeValues[element] = td.textContent;
+            }
+
+            // Gör om kortets table till formulär för att redigera
+            for (let element of monsterAttributes) {
+
+                const td = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
+                // const th = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
+
+                if (td.id !== `${object.name}-color` || `${object.name}-type`) {
+                    const editInput = document.createElement('input');
+                    editInput.value = td.textContent;
+                    editInput.id = td.id;
+                    editInput.type = "number";
+                    // const editLabel = document.createElement('label');
+                    // editLabel.innerHTML = th.innerHTML;
+                    // editLabel.setAttribute('for', editInput.id);
+                    // td.parentNode.replaceChild(editLabel, th);
+                    td.parentNode.replaceChild(editInput, td);
+                }
+            }
+
+            // KNAPP: Confirm
+            const getEditButton = document.getElementById(`edit-${object.name.replaceAll(" ", '-')}`);
+            const confirmButton = document.createElement('button');
+            confirmButton.innerHTML = "Confirm";
+            confirmButton.className = "confirm-button";
+            confirmButton.type = "button";
+            getEditButton.parentNode.replaceChild(confirmButton, getEditButton);
+
+
+
+            // KNAPP: Cancel
+            const cancelButton = document.createElement("button");
+            cancelButton.className = "cancel-button";
+            cancelButton.id = "cancel-edit-" + object.name.replaceAll(" ", '-');
+            cancelButton.type = "button";
+            cancelButton.innerHTML = "Cancel";
+            cardButtonContainer.appendChild(cancelButton);
+
+
+
+
+
+            // KNAPP: "Remove" monster
+            const removeMonsterButton = document.createElement("button");
+            removeMonsterButton.className = "remove-button";
+            removeMonsterButton.id = "remove-" + object.name.replaceAll(" ", '-');
+            removeMonsterButton.type = "button";
+            removeMonsterButton.innerHTML = '"Remove" monster';
+            cardButtonContainer.appendChild(removeMonsterButton);
+            
+        
+
+
+
+
+
+
+
+            // EVENT: Confirm
+            confirmButton.addEventListener('click', (e) => {
+                e.preventDefault();
+
+
+                // Hittar rätt objekt att uppdatera med nya värden
+                const monsterIndex = state.collection.findIndex(monster => monster.name === `${object.name}`);
+
+                // Skapar uppdaterat monster-objekt
+                if (monsterIndex !== -1) {
+
+                    // Skapar objektet
+                    const updatedMonster = { ...state.collection[monsterIndex] };
+
+                    // Loopar igenom attributen och ändrar värdena
+                    for (let element of monsterAttributes) {
+                        const editInput = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
+                        updatedMonster[element] = editInput.value;
+                    }
+
+                    // Byter ut det gamla monstret mot det nya
+                    state.collection.splice(monsterIndex, 1, updatedMonster);
+
+                    renderMonsterCard();
+
+                    window.alert("The monster has been updated!");
+
+                }
+
+                confirmButton.parentNode.replaceChild(editButton, confirmButton);
+                cardButtonContainer.removeChild(cancelButton);
+                cardButtonContainer.removeChild(removeMonsterButton);
+            })
+
+
+            // EVENT: Cancel
+            cancelButton.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // Ändrar tillbaka inputs till td i tabellen
+                for (let element of monsterAttributes) {
+
+                    const editInput = document.getElementById(`${object.name}-Number-of-${element.replaceAll(" ", '-')}`);
+
+                    if (editInput.id !== `${object.name}-color` || `${object.name}-type`) {
+                        const td = document.createElement('td');
+                        td.textContent = originalAttributeValues[element];
+                        td.id = editInput.id;
+                        editInput.parentNode.replaceChild(td, editInput);
+                    }
+
+                }
+
+                //Ersätter knapparna Confirm, Cancel och "Remove" monster med Edit monster-knapp
+                confirmButton.parentNode.replaceChild(editButton, confirmButton);
+                cardButtonContainer.removeChild(cancelButton);
+                cardButtonContainer.removeChild(removeMonsterButton);
+
+            })
+
+            // EVENT: "Remove" monster
+            removeMonsterButton.addEventListener('click', (e) => {
+                e.preventDefault();
+
+
+                const monsterIndex = state.collection.findIndex(monster => monster.name === `${object.name}`);
+
+                state.collection.splice(monsterIndex, 1);
+
+
+                confirmButton.parentNode.replaceChild(editButton, confirmButton);
+                cardButtonContainer.removeChild(cancelButton);
+                cardButtonContainer.removeChild(removeMonsterButton);
+
+                updateCounts();
+                renderMonsterCard();
+
+                customAlert();
+            })
+
+
+        })
+        monsterSection.appendChild(monster);
+
+    })
+
+
+}
 
         customAlert();
       });
@@ -382,33 +551,51 @@ function pushMonsters() {
   renderMonsterCard();
 }
 
-// ================FULLSCREEN=================
-// Gör så element täcker hela skärmen
-// ===========================================
+//Aside toggel för app
+// Hämta asiden och knapparna
+const aside = document.querySelector('aside');
 
-// let formFullscreen = document.getElementsByClassName("form-container").addEventListener("click", function () {
-//     toggleFullscreen(this);
-// });
+// Lägg till ett event som expanderar asiden när du klickar på den
+aside.addEventListener('click', (event) => {
+  // Kolla om klicket kommer från en specifik knapp eller annat innehåll i asiden
+  if (event.target.closest('.filter-button') || event.target.closest('.reset-filter-button')) {
+    // Om det är en knapp, förhindra att asiden stängs
+    event.stopPropagation();
+    return; // Gör ingenting om det är en knapp
+  }
 
-// // Database
-// let databaseFullscreen = document.getElementsByClassName("database").addEventListener("click", function () {
-//     toggleFullscreen(this);
-// });
+  // Toggla aside för att öppna/stänga den
+  aside.classList.toggle('expanded');
+});
 
-// // Monster card
-// let monsterCardFullscreen = document.getElementById(${ object.name } - Number - of - ${ element.replaceAll(" ", '-') }).addEventListener("click", function () {
-//     toggleFullscreen(this);
-// });
+// Om användaren klickar utanför asiden, stäng den
+document.addEventListener('click', (event) => {
+  if (!aside.contains(event.target) && aside.classList.contains('expanded')) {
+    aside.classList.remove('expanded');
+  }
+});
 
-// function toggleFullscreen(element) {
-//     if (element.classList.contains('fullscren')) {
-//         element.classList.remove("fullscreen");
-//     } else {
-//         document.querySelectorAll('.fullscreen').forEach(el => el.classList.remove('fullscreen'));
 
-//         element.classList.add('fullscreen');
-//     }
-// }
+// form toggel för app
+// Hämta form-container
+const formContainer = document.querySelector('.form-container');
+
+// Klick-händelse för att expandera/kollapsa när man klickar på H4
+document.querySelector('.H4-form').addEventListener('click', () => {
+    formContainer.classList.toggle('expanded');
+});
+
+// Funktion för att stänga formuläret om användaren klickar utanför
+document.addEventListener('click', (event) => {
+    // Kontrollera om klicket var utanför form-container eller dess barn
+    if (!formContainer.contains(event.target)) {
+        formContainer.classList.remove('expanded');
+    }
+});
+
+
+
+
 
 // ==============APP STARTAR HÄR==============
 
@@ -423,62 +610,15 @@ const values = [];
 // State innehåller datan från användarens input samt standardvärdena för appen
 
 const state = {
-  collection: [
-    {
-      name: "Grimblot",
-      type: monsterTypes[1],
-      color: monsterColors[1],
-      Eyes: 1,
-      Arms: 2,
-      Horns: 3,
-      Tentacles: 3,
-    },
-    {
-      name: "Zarok",
-      type: monsterTypes[0],
-      color: monsterColors[0],
-      Eyes: 1,
-      Arms: 2,
-      Horns: 3,
-      Tentacles: 3,
-    },
-    {
-      name: "Blisterfang",
-      type: monsterTypes[1],
-      color: monsterColors[1],
-      Eyes: 1,
-      Arms: 2,
-      Horns: 3,
-      Tentacles: 3,
-    },
-    {
-      name: "Thraxxis",
-      type: monsterTypes[2],
-      color: monsterColors[2],
-      Eyes: 1,
-      Arms: 2,
-      Horns: 3,
-      Tentacles: 3,
-    },
-    {
-      name: "Murkspawn",
-      type: monsterTypes[0],
-      color: monsterColors[3],
-      Eyes: 1,
-      Arms: 2,
-      Horns: 3,
-      Tentacles: 3,
-    },
-    {
-      name: "Vorrgath",
-      type: monsterTypes[1],
-      color: monsterColors[4],
-      Eyes: 1,
-      Arms: 2,
-      Horns: 3,
-      Tentacles: 3,
-    },
-  ],
+    collection: [
+        { name: "Grimblot", type: monsterTypes[1], color: monsterColors[1], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3, },
+        { name: "Zarok", type: monsterTypes[0], color: monsterColors[0], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
+        { name: "Blisterfang", type: monsterTypes[1], color: monsterColors[1], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
+        { name: "Thraxxis", type: monsterTypes[2], color: monsterColors[2], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
+        { name: "Murkspawn", type: monsterTypes[0], color: monsterColors[3], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
+        { name: "Vorrgath", type: monsterTypes[1], color: monsterColors[4], Eyes: 1, Arms: 2, Horns: 3, Tentacles: 3 },
+
+    ],
 };
 
 document.getElementById("form-button").addEventListener("click", () => {
@@ -605,3 +745,4 @@ function createResetButton() {
 }
 
 renderMonsterCard();
+    
